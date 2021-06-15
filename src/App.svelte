@@ -1,13 +1,13 @@
 <script>
-  import NetworkEmulator from './content.svelte';
-  import CreateGraph from './modal.svelte';
-  import Sidebar from './sidebar.svelte';
-  import LoadLocalModal from './LoadLocalModal.svelte';
-  import { download } from '../lib/ToggleMenu/downloadFile';
-  import { upload } from '../lib/ToggleMenu/uploadFile';
-  import { fromSaved } from '../lib/init';
-  import { saveToLocal } from '../lib/ToggleMenu/local';
-  import { LOCAL_SAVE_KEY } from '../lib/constants';
+  import NetworkEmulator from "./content.svelte";
+  import CreateGraph from "./modal.svelte";
+  import Sidebar from "./sidebar.svelte";
+  import LoadLocalModal from "./LoadLocalModal.svelte";
+  import { download } from "../lib/ToggleMenu/downloadFile";
+  import { upload } from "../lib/ToggleMenu/uploadFile";
+  import { fromSaved } from "../lib/init";
+  import { saveToLocal } from "../lib/ToggleMenu/local";
+  import { LOCAL_SAVE_KEY } from "../lib/constants";
   import {
     Header,
     HeaderUtilities,
@@ -15,17 +15,17 @@
     SkipToContent,
     SideNav,
     Content,
-  } from 'carbon-components-svelte';
-  import CloudUpload32 from 'carbon-icons-svelte/lib/CloudUpload32';
-  import CloudUpload16 from 'carbon-icons-svelte/lib/CloudUpload16';
-  import CloudDownload32 from 'carbon-icons-svelte/lib/CloudDownload32';
-  import FetchUpload32 from 'carbon-icons-svelte/lib/FetchUpload32';
-  import FetchUpload16 from 'carbon-icons-svelte/lib/FetchUpload16';
-  import Help32 from 'carbon-icons-svelte/lib/Help32';
-  import Help16 from 'carbon-icons-svelte/lib/Help16';
-  import Save32 from 'carbon-icons-svelte/lib/Save32';
+  } from "carbon-components-svelte";
+  import CloudUpload32 from "carbon-icons-svelte/lib/CloudUpload32";
+  import CloudUpload16 from "carbon-icons-svelte/lib/CloudUpload16";
+  import CloudDownload32 from "carbon-icons-svelte/lib/CloudDownload32";
+  import FetchUpload32 from "carbon-icons-svelte/lib/FetchUpload32";
+  import FetchUpload16 from "carbon-icons-svelte/lib/FetchUpload16";
+  import Help32 from "carbon-icons-svelte/lib/Help32";
+  import Help16 from "carbon-icons-svelte/lib/Help16";
+  import Save32 from "carbon-icons-svelte/lib/Save32";
 
-  let name = 'Untitled';
+  let name = "Untitled";
   let isSideNavOpen = false;
 
   let loadLocalOpen = false;
@@ -34,7 +34,7 @@
   const loadProject = (n) => {
     let projects = JSON.parse(localStorage.getItem(LOCAL_SAVE_KEY)) || {};
     if (!projects[n]) {
-      throw 'Internal Error : tried to open non-existing project';
+      throw "Internal Error : tried to open non-existing project";
     }
 
     fromSaved(projects[n]);
@@ -58,7 +58,7 @@
         t.parsed_nodes.push({ id: k, label: k });
       }
       graphBase = t;
-      name = uploaded.name.replace('.json', '');
+      name = uploaded.name.replace(".json", "");
       open = false;
     } catch (error) {
       console.log(error);
