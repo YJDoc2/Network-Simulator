@@ -1,12 +1,12 @@
 <script>
-  import { Modal, TextArea } from 'carbon-components-svelte';
+  import { Modal, TextArea } from "carbon-components-svelte";
 
   let open = true;
   let error = false;
-  let graphList = '';
-  let src = 'utils/graph.png';
+  let graphList = "";
+  let src = "utils/graph.png";
   let invalid = false;
-  const placeholder = 'A-B\nA-C\nC-D';
+  const placeholder = "A-B\nA-C\nC-D";
   const check = () => {
     if (graphList.length <= 0) {
       error = true;
