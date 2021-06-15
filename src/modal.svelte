@@ -1,9 +1,12 @@
 <script>
-  import { Modal } from "carbon-components-svelte";
+  import { Modal, TextArea } from 'carbon-components-svelte';
+
   let open = true;
   let error = false;
-  let graphList = "";
-  let src = "utils/graph.png";
+  let graphList = '';
+  let src = 'utils/graph.png';
+  let invalid = false;
+  const placeholder = 'A-B\nA-C\nC-D';
   const check = () => {
     if (graphList.length <= 0) {
       error = true;
@@ -30,7 +33,7 @@
   primaryButtonText="Create"
   secondaryButtonText="Cancel"
   on:click:button--secondary={() => {
-    open = false;
+    //open = false;
   }}
   on:open
   on:close={() => {
@@ -43,18 +46,27 @@
   <div class="modal-body">
     <p>Example:</p>
     <img {src} id="eg-img" alt="Graph" />
-    <p>List for above graph: "A-B A-C C-D"</p>
+    <p>A-B A-C C-D</p>
   </div>
   <div class="modal-body">
-    <label style="font-size: large; padding-top: 2em;"
-      >Enter input <input
+    <!-- <label style="font-size: large; padding-top: 2em;"
+      >Enter input -->
+    <TextArea
+      {invalid}
+      labelText="Enter Graph structure"
+      {placeholder}
+      on:change={() => {
+        check();
+      }}
+    />
+    <!-- <input
         type="text"
         bind:value={graphList}
         on:input={() => {
           check();
         }}
-      /></label
-    >
+      /> -->
+    <!-- </label> -->
 
     {#if error}
       <p style="color: red;">Please enter valid input!</p>
