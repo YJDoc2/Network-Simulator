@@ -5,7 +5,7 @@
 </script>
 
 <Grid>
-  <Row style="height:20rem; overflow-y: scroll;">
+  <Row>
     <Column>
       <NodeInfo />
     </Column>
