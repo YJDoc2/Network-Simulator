@@ -58,6 +58,7 @@
       on:change={() => {
         check();
       }}
+      bind:value={graphList}
     />
     <!-- <input
         type="text"
@@ -79,11 +80,11 @@
     height: 250px;
     width: 300px;
   }
-  input {
+  /* input {
     width: 20em;
     border-radius: 15px;
     border-color: black;
     outline: none;
     text-transform: uppercase;
-  }
+  } */
 </style>
