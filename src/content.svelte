@@ -25,16 +25,16 @@
   });
 </script>
 
-<Grid>
+<Grid condensed={true} noGutter={true}>
   <Row>
-    <Column>
+    <Column md={2}>
       <Nodeinfo />
     </Column>
     <Column md={4}>
-      <div bind:this={div} style="min-height:40rem" />
+      <div bind:this={div} style="min-height:35rem" />
       <TextArea rows={10} labelText="Enqueue Packets" placeholder="> " />
     </Column>
-    <Column>
+    <Column md={2}>
       <Logpanel />
     </Column>
   </Row>
