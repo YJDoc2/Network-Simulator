@@ -44,5 +44,6 @@
 </SideNav>
 <Content style="margin-top:4rem">
   <!-- <CreateGraph /> -->
+
   <NetworkEmulator />
 </Content>
