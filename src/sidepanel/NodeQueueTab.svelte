@@ -2,7 +2,7 @@
   import { TextInput } from 'carbon-components-svelte';
   import { Modal } from 'carbon-components-svelte';
   import { Button, Tile } from 'carbon-components-svelte';
-  import { getNodeQueue } from '../lib';
+  import { getNodeQueue } from '../../lib';
 
   export let value = '';
   export let filteredNodes = [];

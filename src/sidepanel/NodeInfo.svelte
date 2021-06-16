@@ -1,5 +1,5 @@
 <script>
-  import { getNodeList } from '../lib';
+  import { getNodeList } from '../../lib';
   import { Tabs, Tab, TabContent } from 'carbon-components-svelte';
   import NodeQueueTab from './NodeQueueTab.svelte';
   import NodeDataTab from './NodeDataTab.svelte';
