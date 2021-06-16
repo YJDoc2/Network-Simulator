@@ -30,6 +30,6 @@
 </Header>
 
 <main style="margin-top:5rem">
-  <!-- <CreateGraph /> -->
+  <CreateGraph />
   <NetworkEmulator />
 </main>

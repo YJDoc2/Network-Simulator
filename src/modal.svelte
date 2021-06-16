@@ -1,9 +1,9 @@
 <script>
   import { Modal, TextArea } from 'carbon-components-svelte';
-
+  import { getParsedInputGraph } from '../lib';
   let open = true;
   let error = false;
-  let graphList = '';
+  let graphList = "";
   let src = 'utils/graph.png';
   let invalid = false;
   const placeholder = 'A-B\nA-C\nC-D';
@@ -16,11 +16,13 @@
   };
   // Function to pass the input to backend
   const passGraphList = () => {
+
+    
     if (graphList.length <= 0) {
       error = true;
     } else {
       open = false;
-      console.log(graphList.toLocaleUpperCase());
+      console.log(getParsedInputGraph(graphList.toUpperCase().trim()));
     }
   };
 </script>
@@ -54,6 +56,7 @@
     <TextArea
       {invalid}
       labelText="Enter Graph structure"
+      bind:value={graphList}
       {placeholder}
       on:change={() => {
         check();
