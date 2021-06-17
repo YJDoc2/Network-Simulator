@@ -1,10 +1,13 @@
 <script>
   import { onMount } from 'svelte';
   import { Grid, Row, Column } from 'carbon-components-svelte';
-  import { TextArea } from 'carbon-components-svelte';
+  import { Button, TextArea } from 'carbon-components-svelte';
   import SidePanel from './sidepanel/SidePanel.svelte';
+  import { enqueuePackets } from '../lib';
+  import ArrowRight32 from 'carbon-icons-svelte/lib/ArrowRight32';
   import { SVG, Timeline } from '@svgdotjs/svg.js';
   let div;
+  let commands = '';
   onMount(() => {
     // console.log(div);
     let draw = SVG().addTo(div).size(300, 300);
@@ -31,7 +34,25 @@
     </Column>
     <Column md={5}>
       <div bind:this={div} style="min-height:35rem" />
-      <TextArea rows={10} labelText="Enqueue Packets" placeholder="> " />
+      <div style="position: relative;">
+        <TextArea
+          style=" resize: none;display: block;"
+          bind:value={commands}
+          rows={10}
+          labelText="Enqueue Packets"
+          placeholder="> "
+        />
+        <Button
+          style="position: absolute;bottom: 1rem;right: 0.5rem;"
+          iconDescription="Enqueue Packets"
+          icon={ArrowRight32}
+          kind="tertiary"
+          on:click={() => {
+            enqueuePackets(commands);
+            commands = '';
+          }}
+        />
+      </div>
     </Column>
   </Row>
 </Grid>
