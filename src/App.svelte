@@ -1,7 +1,7 @@
 <script>
-  import NetworkEmulator from './content.svelte';
-  import CreateGraph from './modal.svelte';
-  import Sidebar from './toggleMenu.svelte';
+  import NetworkEmulator from "./content.svelte";
+  import CreateGraph from "./modal.svelte";
+  import Sidebar from "./toggleMenu.svelte";
   import {
     Header,
     HeaderUtilities,
@@ -9,13 +9,13 @@
     SkipToContent,
     SideNav,
     Content,
-  } from 'carbon-components-svelte';
-  import CloudUpload32 from 'carbon-icons-svelte/lib/CloudUpload32';
-  import CloudDownload32 from 'carbon-icons-svelte/lib/CloudDownload32';
-  import Share32 from 'carbon-icons-svelte/lib/Share32';
-  import FetchUpload32 from 'carbon-icons-svelte/lib/FetchUpload32';
-  import Help32 from 'carbon-icons-svelte/lib/Help32';
-  import Save32 from 'carbon-icons-svelte/lib/Save32';
+  } from "carbon-components-svelte";
+  import CloudUpload32 from "carbon-icons-svelte/lib/CloudUpload32";
+  import CloudDownload32 from "carbon-icons-svelte/lib/CloudDownload32";
+  import Share32 from "carbon-icons-svelte/lib/Share32";
+  import FetchUpload32 from "carbon-icons-svelte/lib/FetchUpload32";
+  import Help32 from "carbon-icons-svelte/lib/Help32";
+  import Save32 from "carbon-icons-svelte/lib/Save32";
   let isSideNavOpen = false;
 </script>
 
@@ -39,10 +39,12 @@
   </HeaderUtilities>
 </Header>
 
-<SideNav bind:isOpen={isSideNavOpen}>
+<!-- fixed=true because then the overlay background condition will never become true -->
+<SideNav fixed={true} style="z-index: 1;" bind:isOpen={isSideNavOpen}>
   <Sidebar bind:open={isSideNavOpen} />
 </SideNav>
-<Content style="margin-top:4rem">
+<Content style="margin-top:4rem;padding: 0;margin-left: 0;">
   <!-- <CreateGraph /> -->
+
   <NetworkEmulator />
 </Content>

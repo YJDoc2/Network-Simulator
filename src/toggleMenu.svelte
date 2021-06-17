@@ -1,16 +1,16 @@
 <script>
-  import Add32 from 'carbon-icons-svelte/lib/Add32';
-  import CloudUpload32 from 'carbon-icons-svelte/lib/CloudUpload32';
-  import CloudDownload32 from 'carbon-icons-svelte/lib/CloudDownload32';
-  import Bookmark32 from 'carbon-icons-svelte/lib/Bookmark32';
-  import BookmarkFilled32 from 'carbon-icons-svelte/lib/BookmarkFilled32';
-  import Search32 from 'carbon-icons-svelte/lib/Search32';
-  import LogoGithub32 from 'carbon-icons-svelte/lib/LogoGithub32';
-  import { onMount } from 'svelte';
+  import Add32 from "carbon-icons-svelte/lib/Add32";
+  import CloudUpload32 from "carbon-icons-svelte/lib/CloudUpload32";
+  import CloudDownload32 from "carbon-icons-svelte/lib/CloudDownload32";
+  import Bookmark32 from "carbon-icons-svelte/lib/Bookmark32";
+  import BookmarkFilled32 from "carbon-icons-svelte/lib/BookmarkFilled32";
+  import Search32 from "carbon-icons-svelte/lib/Search32";
+  import LogoGithub32 from "carbon-icons-svelte/lib/LogoGithub32";
+  import { onMount } from "svelte";
 
   //initialising width of sidebar on mounting
   onMount(() => {
-    document.getElementById('mySidenav').style.width = '320px';
+    document.getElementById("mySidenav").style.width = "320px";
   });
 </script>
 
