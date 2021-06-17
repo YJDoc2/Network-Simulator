@@ -10,8 +10,9 @@
       <NodeInfo />
     </Column>
   </Row>
-  <Column>
-    <LogPanel />
-  </Column>
-  <Row />
+  <Row>
+    <Column>
+      <LogPanel />
+    </Column>
+  </Row>
 </Grid>
