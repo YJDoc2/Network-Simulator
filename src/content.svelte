@@ -21,7 +21,10 @@
         <TextArea
           {invalid}
           {invalidText}
-          style=" resize: none;display: block;"
+          style=" resize: none;display: block; 
+          box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+          
+          "
           bind:value={commands}
           rows={10}
           labelText="Enqueue Packets"
@@ -35,14 +38,14 @@
           on:click={() => {
             try {
               enqueuePackets(commands);
-              commands = '';
+              commands = "";
               invalid = false;
-              invalidText = '';
+              invalidText = "";
             } catch (e) {
-              if (typeof e === 'string') {
+              if (typeof e === "string") {
                 invalidText = e;
               } else {
-                invalidText = 'Error in parsing';
+                invalidText = "Error in parsing";
               }
             }
           }}
