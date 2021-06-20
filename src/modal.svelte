@@ -1,13 +1,8 @@
 <script>
-<<<<<<< HEAD
-  import {TranslateGraphCordinates} from '../lib/parsers';
+  import {ParseGraph, TranslateGraphCordinates} from '../lib/parsers';
   import { Modal, TextArea } from "carbon-components-svelte";
   import { SVG, Timeline } from '@svgdotjs/svg.js';
-=======
->>>>>>> 4f83895de679d501f22d9c8d78b73604e6e27674
 
-  import { Modal, TextArea } from 'carbon-components-svelte';
-  import {ParseGraph} from 'index.js'
   let open = true;
   let error = false;
   let graphList = "";
@@ -28,41 +23,31 @@
       error = true;
     } else {
       open = false;
-      console.log(graphList.toLocaleUpperCase());
-      console.log(ParseGraph(graphList.toUpperCase().trim()));
-			// TODO: Change below line to network_config=getParsedInputs();TranslateGraphCordinates(network_config);
-      const network_config = {
-				parsed_nodes: [
-					{ id: 1, label: "Node 1" },
-					{ id: 2, label: "Node 2" },
-					{ id: 3, label: "Node 3" },
-					{ id: 4, label: "Node 4" },
-					{ id: 5, label: "Node 5" },
-				],
-				parsed_edges: [
-					{ from: 1, to: 3 },
-					{ from: 1, to: 2 },
-					{ from: 2, to: 4 },
-					{ from: 2, to: 5 },
-					{ from: 3, to: 3 },
-				],
-			}
+
+      // Parse the Input string and get Edges & Nodes in Vis.js compatible format
+      const network_config = ParseGraph(graphList.toUpperCase().trim());
+
+      // Get Nodes that are friendly with DOM coordinate system
 			const translated_nodes = TranslateGraphCordinates(network_config);
 
+      // Initialize SVG.JS
       let drawingDiv = document.getElementById("network-svg");
 			let draw = SVG().addTo(drawingDiv).size(drawingDiv.clientWidth, drawingDiv.clientHeight);
-			console.log(translated_nodes);
+
+      // Draw Nodes
       let node_vertices = [];
       for (var node in translated_nodes) {
         node_vertices.push(draw.circle(50).attr({ fill: "#f06" }).move(translated_nodes[node].x-25, translated_nodes[node].y-25))
       }
+
+      // Draw Edges
       let edge_lines = [];
+      // Function for drawing an edge
       function DrawLine(edge){
         let temp = draw.line(translated_nodes[`${edge.from}`].x, translated_nodes[`${edge.from}`].y, translated_nodes[`${edge.to}`].x, translated_nodes[`${edge.to}`].y);
 			  temp.stroke({ color: "#f06", width: 7, linecap: "round" });
         edge_lines.push(temp);
       }
-
       network_config.parsed_edges.forEach(DrawLine);
 
 			// let timeline = new Timeline();
