@@ -16,8 +16,6 @@
   };
   // Function to pass the input to backend
   const passGraphList = () => {
-
-    
     if (graphList.length <= 0) {
       error = true;
     } else {
