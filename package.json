@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@svgdotjs/svg.js": "^3.0.16",
-    "sirv-cli": "^1.0.0"
+    "sirv-cli": "^1.0.0",
+    "vis-network": "^9.0.4"
   }
 }
