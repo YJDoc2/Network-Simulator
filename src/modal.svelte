@@ -1,7 +1,7 @@
 <script>
 
   import { Modal, TextArea } from 'carbon-components-svelte';
-  import { getParsedInputGraph } from '../lib';
+  import {ParseGraph} from 'index.js'
   let open = true;
   let error = false;
   let graphList = "";
@@ -22,7 +22,7 @@
       error = true;
     } else {
       open = false;
-      console.log(getParsedInputGraph(graphList.toUpperCase().trim()));
+      console.log(ParseGraph(graphList.toUpperCase().trim()));
     }
   };
 </script>
@@ -61,7 +61,7 @@
       on:change={() => {
         check();
       }}
-      bind:value={graphList}
+     
     />
     <!-- <input
         type="text"
