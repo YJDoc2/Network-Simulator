@@ -1,11 +1,15 @@
 <script>
   import { onMount } from 'svelte';
   import { Grid, Row, Column } from 'carbon-components-svelte';
-  import { TextArea } from 'carbon-components-svelte';
-  import Logpanel from './logpanel.svelte';
-  import Nodeinfo from './NodeInfo.svelte';
+  import { Button, TextArea } from 'carbon-components-svelte';
+  import SidePanel from './sidepanel/SidePanel.svelte';
+  import { enqueuePackets } from '../lib';
+  import ArrowRight32 from 'carbon-icons-svelte/lib/ArrowRight32';
   import { SVG, Timeline } from '@svgdotjs/svg.js';
   let div;
+  let commands = '';
+  let invalid = false;
+  let invalidText = '';
   onMount(() => {
     // console.log(div);
     let draw = SVG().addTo(div).size(300, 300);
@@ -25,17 +29,44 @@
   });
 </script>
 
-<Grid>
+<Grid condensed={true} noGutter={true}>
   <Row>
-    <Column>
-      <Nodeinfo />
+    <Column md={3}>
+      <SidePanel />
     </Column>
-    <Column md={4}>
-      <div bind:this={div} style="min-height:40rem" />
-      <TextArea rows={10} labelText="Enqueue Packets" placeholder="> " />
-    </Column>
-    <Column>
-      <Logpanel />
+    <Column md={5}>
+      <div bind:this={div} style="min-height:35rem" />
+      <div style="position: relative;">
+        <TextArea
+          {invalid}
+          {invalidText}
+          style=" resize: none;display: block;"
+          bind:value={commands}
+          rows={10}
+          labelText="Enqueue Packets"
+          placeholder="> "
+        />
+        <Button
+          style="position: absolute;bottom: 1rem;right: 0.5rem;"
+          iconDescription="Enqueue Packets"
+          icon={ArrowRight32}
+          kind="tertiary"
+          on:click={() => {
+            try {
+              enqueuePackets(commands);
+              commands = '';
+              invalid = false;
+              invalidText = '';
+            } catch (e) {
+              if (typeof e === 'string') {
+                invalidText = e;
+              } else {
+                invalidText = 'Error in parsing';
+              }
+            }
+          }}
+        />
+      </div>
     </Column>
   </Row>
 </Grid>
