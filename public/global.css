@@ -67,14 +67,8 @@ button:focus {
 	border-color: #666;
 }
 
-/* Hide the Canvas */
-#network-visjs canvas,
-#network-visjs .vis-network {
-	clip: rect(0 0 0 0);
-	clip-path: inset(50%);
-	height: 1px;
-	overflow: hidden;
+/* Hide the Visjs div. Note: Do not use display: none; here as it causes unexpected behaviour */
+#network-visjs {
 	position: absolute;
-	white-space: nowrap;
-	width: 1px;
+  right: -100vw;
 }
