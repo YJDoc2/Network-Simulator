@@ -1,10 +1,12 @@
 <script>
-  import { Modal, TextArea } from "carbon-components-svelte";
 
+  import { Modal, TextArea } from 'carbon-components-svelte';
+  import {ParseGraph} from 'index.js'
   let open = true;
   let error = false;
   let graphList = "";
-  let src = "utils/graph.png";
+  let src = 'utils/graph.png';
+
   let invalid = false;
   const placeholder = "A-B\nA-C\nC-D";
   const check = () => {
@@ -20,7 +22,7 @@
       error = true;
     } else {
       open = false;
-      console.log(graphList.toLocaleUpperCase());
+      console.log(ParseGraph(graphList.toUpperCase().trim()));
     }
   };
 </script>
@@ -54,11 +56,12 @@
     <TextArea
       {invalid}
       labelText="Enter Graph structure"
+      bind:value={graphList}
       {placeholder}
       on:change={() => {
         check();
       }}
-      bind:value={graphList}
+     
     />
     <!-- <input
         type="text"

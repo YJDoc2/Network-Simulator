@@ -39,12 +39,12 @@
   </HeaderUtilities>
 </Header>
 
+
 <!-- fixed=true because then the overlay background condition will never become true -->
 <SideNav fixed={true} style="z-index: 1;" bind:isOpen={isSideNavOpen}>
   <Sidebar />
 </SideNav>
 <Content style="margin-top:4rem;padding: 0;margin-left: 0;">
   <!-- <CreateGraph /> -->
-
   <NetworkEmulator />
 </Content>
