@@ -1,12 +1,18 @@
 <script>
+<<<<<<< HEAD
   import {TranslateGraphCordinates} from '../lib/parsers';
   import { Modal, TextArea } from "carbon-components-svelte";
   import { SVG, Timeline } from '@svgdotjs/svg.js';
+=======
+>>>>>>> 4f83895de679d501f22d9c8d78b73604e6e27674
 
+  import { Modal, TextArea } from 'carbon-components-svelte';
+  import {ParseGraph} from 'index.js'
   let open = true;
   let error = false;
   let graphList = "";
-  let src = "utils/graph.png";
+  let src = 'utils/graph.png';
+
   let invalid = false;
   const placeholder = "A-B\nA-C\nC-D";
   const check = () => {
@@ -23,6 +29,7 @@
     } else {
       open = false;
       console.log(graphList.toLocaleUpperCase());
+      console.log(ParseGraph(graphList.toUpperCase().trim()));
 			// TODO: Change below line to network_config=getParsedInputs();TranslateGraphCordinates(network_config);
       const network_config = {
 				parsed_nodes: [
@@ -96,11 +103,12 @@
     <TextArea
       {invalid}
       labelText="Enter Graph structure"
+      bind:value={graphList}
       {placeholder}
       on:change={() => {
         check();
       }}
-      bind:value={graphList}
+     
     />
     <!-- <input
         type="text"
