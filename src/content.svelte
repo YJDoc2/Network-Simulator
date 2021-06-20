@@ -15,7 +15,7 @@
       <SidePanel />
     </Column>
     <Column md={5}>
-      <div id="network-visjs" style="min-height:35rem" />
+      <div id="network-visjs" />
       <div id="network-svg" style="min-height:35rem" />
       <div style="position: relative;">
         <TextArea
