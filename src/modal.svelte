@@ -1,6 +1,7 @@
 <script>
   import {TranslateGraphCordinates} from '../lib/parsers';
   import { Modal, TextArea } from "carbon-components-svelte";
+  import { SVG, Timeline } from '@svgdotjs/svg.js';
 
   let open = true;
   let error = false;
@@ -23,7 +24,7 @@
       open = false;
       console.log(graphList.toLocaleUpperCase());
 			// TODO: Change below line to network_config=getParsedInputs();TranslateGraphCordinates(network_config);
-			TranslateGraphCordinates({
+      const network_config = {
 				parsed_nodes: [
 					{ id: 1, label: "Node 1" },
 					{ id: 2, label: "Node 2" },
@@ -38,8 +39,31 @@
 					{ from: 2, to: 5 },
 					{ from: 3, to: 3 },
 				],
-			});
-    }
+			}
+			const translated_nodes = TranslateGraphCordinates(network_config);
+
+      let drawingDiv = document.getElementById("network-svg");
+			let draw = SVG().addTo(drawingDiv).size(drawingDiv.clientWidth, drawingDiv.clientHeight);
+			console.log(translated_nodes);
+      let node_vertices = [];
+      for (var node in translated_nodes) {
+        node_vertices.push(draw.circle(50).attr({ fill: "#f06" }).move(translated_nodes[node].x-25, translated_nodes[node].y-25))
+      }
+      let edge_lines = [];
+      function DrawLine(edge){
+        let temp = draw.line(translated_nodes[`${edge.from}`].x, translated_nodes[`${edge.from}`].y, translated_nodes[`${edge.to}`].x, translated_nodes[`${edge.to}`].y);
+			  temp.stroke({ color: "#f06", width: 7, linecap: "round" });
+        edge_lines.push(temp);
+      }
+
+      network_config.parsed_edges.forEach(DrawLine);
+
+			// let timeline = new Timeline();
+			// c3.timeline(timeline);
+			// c4.timeline(timeline);
+			// c3.animate(1000, 0, "absolute").move(170, 120);
+			// c4.animate(1000, 0, "absolute").move(40, 80);
+		}
   };
 </script>
 
