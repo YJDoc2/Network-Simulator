@@ -35,7 +35,7 @@
       <SidePanel />
     </Column>
     <Column md={5}>
-      <div bind:this={div} style="min-height:35rem" />
+      <div bind:this={div} id="network" style="min-height:35rem" />
       <div style="position: relative;">
         <TextArea
           {invalid}
