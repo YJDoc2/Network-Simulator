@@ -1,12 +1,13 @@
 <script>
   import { TranslateGraphCordinates } from '../lib/parsers';
-  import { Grid, Row, Column } from 'carbon-components-svelte';
-  import { Button, TextArea } from 'carbon-components-svelte';
-  import SidePanel from './sidepanel/SidePanel.svelte';
   import { enqueuePackets } from '../lib';
   import { SVG, Timeline } from '@svgdotjs/svg.js';
-  import ArrowRight32 from 'carbon-icons-svelte/lib/ArrowRight32';
   import { onMount } from 'svelte';
+  import SidePanel from './sidepanel/SidePanel.svelte';
+  import { Grid, Row, Column } from 'carbon-components-svelte';
+  import { Button, TextArea } from 'carbon-components-svelte';
+  import ArrowRight32 from 'carbon-icons-svelte/lib/ArrowRight32';
+  import { NODE_RADIUS, NODE_COLOR } from '../lib/constants';
 
   export let graphBase;
 
@@ -30,18 +31,6 @@
     let draw = SVG()
       .addTo(drawingDiv)
       .size(drawingDiv.clientWidth, drawingDiv.clientHeight);
-
-    // Draw Nodes
-    let node_vertices = [];
-    for (var node in translated_nodes) {
-      node_vertices.push(
-        draw
-          .circle(50)
-          .attr({ fill: '#f06' })
-          .move(translated_nodes[node].x - 25, translated_nodes[node].y - 25)
-      );
-    }
-
     // Draw Edges
     let edge_lines = [];
     // Function for drawing an edge
@@ -52,10 +41,33 @@
         translated_nodes[`${edge.to}`].x,
         translated_nodes[`${edge.to}`].y
       );
-      temp.stroke({ color: '#f06', width: 7, linecap: 'round' });
+      temp.stroke({ color: NODE_COLOR, width: 7, linecap: 'round' });
       edge_lines.push(temp);
     }
     graphBase.parsed_edges.forEach(DrawLine);
+
+    // Draw Nodes
+    let node_vertices = [];
+    for (let node in translated_nodes) {
+      node_vertices.push(
+        draw
+          .circle(NODE_RADIUS)
+          .fill(NODE_COLOR)
+          .stroke({ color: NODE_COLOR, width: 2 })
+          .move(
+            translated_nodes[node].x - NODE_RADIUS / 2,
+            translated_nodes[node].y - NODE_RADIUS / 2
+          )
+      );
+      draw
+        .plain(node)
+        .font({ fill: '#000000', size: '2rem' })
+        .move(
+          // here we subtract 1 from node length to skip single lettered names
+          translated_nodes[node].x - NODE_RADIUS / 2 - (node.length - 1) * 5,
+          translated_nodes[node].y + NODE_RADIUS / 2
+        );
+    }
   });
 
   // let timeline = new Timeline();
