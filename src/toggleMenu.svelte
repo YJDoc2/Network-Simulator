@@ -7,11 +7,18 @@
   import Search32 from "carbon-icons-svelte/lib/Search32";
   import LogoGithub32 from "carbon-icons-svelte/lib/LogoGithub32";
   import { onMount } from "svelte";
+  import { download } from "../lib/ToggleMenu/downloadFile";
+  import { upload } from "../lib/ToggleMenu/uploadFile";
 
   //initialising width of sidebar on mounting
   onMount(() => {
     document.getElementById("mySidenav").style.width = "320px";
   });
+  //Pending
+  const uploadProject = async () => {
+    const jsonF = await upload();
+    console.log({ jsonF });
+  };
 </script>
 
 <div id="mySidenav" class="sidenav">
@@ -26,9 +33,9 @@
   </div>
   <div id="items">
     <CloudUpload32 />
-    <a href="/">Upload Project</a>
+    <a href="/" on:click={() => uploadProject()}>Upload Project</a>
   </div>
-  <div id="items">
+  <div id="items" on:click={() => download()}>
     <CloudDownload32 />
     <a href="/">Download Project</a>
   </div>

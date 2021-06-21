@@ -1,12 +1,12 @@
 <script>
-  import { Grid, Row, Column } from 'carbon-components-svelte';
-  import { Button, TextArea } from 'carbon-components-svelte';
-  import SidePanel from './sidepanel/SidePanel.svelte';
-  import { enqueuePackets } from '../lib';
-  import ArrowRight32 from 'carbon-icons-svelte/lib/ArrowRight32';
-  let commands = '';
+  import { Grid, Row, Column } from "carbon-components-svelte";
+  import { Button, TextArea } from "carbon-components-svelte";
+  import SidePanel from "./sidepanel/SidePanel.svelte";
+  import { enqueuePackets } from "../lib";
+  import ArrowRight32 from "carbon-icons-svelte/lib/ArrowRight32";
+  let commands = "";
   let invalid = false;
-  let invalidText = '';
+  let invalidText = "";
 </script>
 
 <Grid condensed={true} noGutter={true}>
@@ -21,7 +21,10 @@
         <TextArea
           {invalid}
           {invalidText}
-          style=" resize: none;display: block;"
+          style=" resize: none;display: block; 
+          box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+          
+          "
           bind:value={commands}
           rows={10}
           labelText="Enqueue Packets"
@@ -35,14 +38,14 @@
           on:click={() => {
             try {
               enqueuePackets(commands);
-              commands = '';
+              commands = "";
               invalid = false;
-              invalidText = '';
+              invalidText = "";
             } catch (e) {
-              if (typeof e === 'string') {
+              if (typeof e === "string") {
                 invalidText = e;
               } else {
-                invalidText = 'Error in parsing';
+                invalidText = "Error in parsing";
               }
             }
           }}
