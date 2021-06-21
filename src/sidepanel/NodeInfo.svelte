@@ -19,32 +19,35 @@
     });
   }
 </script>
+<div class="paper">
+  <h3>Nodes</h3>
 
-<h3>Nodes</h3>
-
-<br />
-<TextInput bind:value lableText="Search" placeholder="Search Node By Name" />
-<div style="height:14rem; overflow-y: scroll;">
-  {#each filteredNodes as node}
-    <ButtonSet>
-      <Tile>{node}</Tile>
-      <Button
-        kind="ghost"
-        on:click={() => {
-          selected = node;
-          configOpen = true;
-        }}>Config</Button
-      >
-      <Button
-        kind="ghost"
-        on:click={() => {
-          selected = node;
-          queueOpen = true;
-        }}>Queue</Button
-      >
-    </ButtonSet>
-    <hr />
-  {/each}
+  <br />
+  <TextInput bind:value lableText="Search" placeholder="Search Node By Name" />
+  <div style="height:30vh; overflow-y: scroll;">
+    {#each filteredNodes as node}
+      <div>
+      <ButtonSet style="display: flex; width:match-parent">
+        <Tile>{node}</Tile>
+        <Button
+          kind="ghost"
+          on:click={() => {
+            selected = node;
+            configOpen = true;
+          }}>Config</Button
+        >
+        <Button
+          kind="ghost"
+          on:click={() => {
+            selected = node;
+            queueOpen = true;
+          }}>Queue</Button
+        >
+      </ButtonSet>
+      </div>
+      <hr />
+    {/each}
+  </div>
 </div>
 
 <NodeDataModal {selected} bind:open={configOpen} />
