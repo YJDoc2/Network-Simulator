@@ -1,26 +1,26 @@
 <script>
-  import { ParseGraph } from '../lib/parsers';
-  import { clear } from '../lib/init';
+  import { ParseGraph } from "../lib/parsers";
+  import { clear } from "../lib/init";
   import {
     TextArea,
     InlineNotification,
     TextInput,
-  } from 'carbon-components-svelte';
+  } from "carbon-components-svelte";
   import {
     ComposedModal,
     ModalHeader,
     ModalBody,
     ModalFooter,
-  } from 'carbon-components-svelte';
+  } from "carbon-components-svelte";
 
   export let graphBase;
-  export let name = 'Untitled';
+  export let name = "Untitled";
 
   let error = false;
-  let graphList = '';
-  let src = 'utils/graph.png';
+  let graphList = "";
+  let src = "utils/graph.png";
   let invalid = false;
-  const placeholder = 'A-B\nA-C\nC-D';
+  const placeholder = "A-B\nA-C\nC-D";
   let open = true;
 
   const check = () => {
@@ -89,7 +89,7 @@
         hideCloseButton
         kind="error"
         title="Error:"
-        subtitle={'Please Enter Valid Input'}
+        subtitle={"Please Enter Valid Input"}
       />
     {/if}
   </ModalBody>
