@@ -1,8 +1,8 @@
 <script>
   import { ParseGraph, TranslateGraphCordinates } from "../lib/parsers";
   import { Modal, TextArea } from "carbon-components-svelte";
-  import { SVG, Timeline } from "@svgdotjs/svg.js";
-
+  // import { SVG, Timeline } from "@svgdotjs/svg.js";
+  import { draw } from "./board";
   let open = true;
   let error = false;
   let graphList = "";
@@ -29,7 +29,6 @@
 
       // Get Nodes that are friendly with DOM coordinate system
       const translated_nodes = TranslateGraphCordinates(network_config);
-
       // Initialize SVG.JS
       let drawingDiv = document.getElementById("network-svg");
       let draw = SVG()
