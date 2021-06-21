@@ -9,10 +9,12 @@
   import { onMount } from "svelte";
   import { download } from "../lib/ToggleMenu/downloadFile";
   import { upload } from "../lib/ToggleMenu/uploadFile";
+
   //initialising width of sidebar on mounting
   onMount(() => {
     document.getElementById("mySidenav").style.width = "320px";
   });
+  //Pending
   const uploadProject = async () => {
     const jsonF = await upload();
     console.log({ jsonF });
