@@ -1,5 +1,5 @@
 <script>
-  import { TranslateGraphCordinates } from '../lib/parsers';
+  import { translateGraphCoordinates, scaleCoordinates } from '../lib/util';
   import { enqueuePackets } from '../lib';
   import { SVG, Timeline } from '@svgdotjs/svg.js';
   import { onMount } from 'svelte';
@@ -19,13 +19,15 @@
   let VISDiv;
   onMount(() => {
     // Get Nodes that are friendly with DOM coordinate system
-    const translated_nodes = TranslateGraphCordinates(
+    const translated_nodes = translateGraphCoordinates(
       graphBase,
       VISDiv,
       SVGDiv.clientWidth,
       SVGDiv.clientHeight
     );
-
+    // scale the coordinates, so that if x or y range is less than third of width
+    // or height respectively, it will be scaled up
+    scaleCoordinates(translated_nodes, SVGDiv.clientWidth, SVGDiv.clientHeight);
     // Initialize SVG.JS
     let drawingDiv = SVGDiv;
     let draw = SVG()
@@ -36,10 +38,10 @@
     // Function for drawing an edge
     function DrawLine(edge) {
       let temp = draw.line(
-        translated_nodes[`${edge.from}`].x,
-        translated_nodes[`${edge.from}`].y,
-        translated_nodes[`${edge.to}`].x,
-        translated_nodes[`${edge.to}`].y
+        translated_nodes.get(`${edge.from}`).x,
+        translated_nodes.get(`${edge.from}`).y,
+        translated_nodes.get(`${edge.to}`).x,
+        translated_nodes.get(`${edge.to}`).y
       );
       temp.stroke({ color: NODE_COLOR, width: 7, linecap: 'round' });
       edge_lines.push(temp);
@@ -48,26 +50,23 @@
 
     // Draw Nodes
     let node_vertices = [];
-    for (let node in translated_nodes) {
+    translated_nodes.forEach((node, name) => {
       node_vertices.push(
         draw
           .circle(NODE_RADIUS)
           .fill(NODE_COLOR)
           .stroke({ color: NODE_COLOR, width: 2 })
-          .move(
-            translated_nodes[node].x - NODE_RADIUS / 2,
-            translated_nodes[node].y - NODE_RADIUS / 2
-          )
+          .move(node.x - NODE_RADIUS / 2, node.y - NODE_RADIUS / 2)
       );
       draw
-        .plain(node)
+        .plain(name)
         .font({ fill: '#000000', size: '2rem' })
         .move(
           // here we subtract 1 from node length to skip single lettered names
-          translated_nodes[node].x - NODE_RADIUS / 2 - (node.length - 1) * 5,
-          translated_nodes[node].y + NODE_RADIUS / 2
+          node.x - NODE_RADIUS / 2 - (name.length - 1) * 5,
+          node.y + NODE_RADIUS / 2
         );
-    }
+    });
   });
 
   // let timeline = new Timeline();

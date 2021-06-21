@@ -24,11 +24,16 @@
       { id: 'B', lable: 'B' },
       { id: 'C', lable: 'C' },
       { id: 'D', lable: 'D' },
+      // { id: 'E', lable: 'E' },
+      // { id: 'F', lable: 'F' },
     ],
     parsed_edges: [
       { from: 'A', to: 'B' },
       { from: 'A', to: 'C' },
       { from: 'C', to: 'D' },
+      { from: 'B', to: 'D' },
+      // { from: 'B', to: 'E' },
+      // { from: 'D', to: 'F' },
     ],
   };
 </script>
