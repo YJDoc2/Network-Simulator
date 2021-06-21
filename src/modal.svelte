@@ -1,26 +1,26 @@
 <script>
-  import { ParseGraph } from '../lib/parsers';
+  import { ParseGraph } from "../lib/parsers";
   import {
     TextArea,
     InlineNotification,
     TextInput,
-  } from 'carbon-components-svelte';
+  } from "carbon-components-svelte";
   import {
     ComposedModal,
     ModalHeader,
     ModalBody,
     ModalFooter,
-  } from 'carbon-components-svelte';
+  } from "carbon-components-svelte";
 
   export let graphBase;
-  export let name = 'Untitled';
+  export let name = "Untitled";
 
   let open = true;
   let error = false;
-  let graphList = '';
-  let src = 'utils/graph.png';
+  let graphList = "";
+  let src = "utils/graph.png";
   let invalid = false;
-  const placeholder = 'A-B\nA-C\nC-D';
+  const placeholder = "A-B\nA-C\nC-D";
 
   const check = () => {
     if (graphList.length <= 0) {
@@ -39,7 +39,7 @@
         // Parse the Input string and get Edges & Nodes in Vis.js compatible format
         let structure = ParseGraph(graphList.toUpperCase().trim());
         //storing in localstorage needs a little optimization
-        localStorage.setItem('structure', JSON.stringify(structure));
+        localStorage.setItem("structure", JSON.stringify(structure));
         graphBase = ParseGraph(graphList.toUpperCase().trim());
         open = false;
       } catch (e) {
@@ -91,7 +91,7 @@
         hideCloseButton
         kind="error"
         title="Error:"
-        subtitle={'Please Enter Valid Input'}
+        subtitle={"Please Enter Valid Input"}
       />
     {/if}
   </ModalBody>
