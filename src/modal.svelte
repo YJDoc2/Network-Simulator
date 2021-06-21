@@ -1,6 +1,12 @@
 <script>
   import { ParseGraph } from '../lib/parsers';
-  import { Modal, TextArea } from 'carbon-components-svelte';
+  import { TextArea, InlineNotification } from 'carbon-components-svelte';
+  import {
+    ComposedModal,
+    ModalHeader,
+    ModalBody,
+    ModalFooter,
+  } from 'carbon-components-svelte';
 
   export let graphBase;
 
@@ -35,43 +41,44 @@
   };
 </script>
 
-<Modal
-  bind:open
-  preventCloseOnClickOutside
+<ComposedModal
   size="lg"
-  modalHeading="Create Graph"
-  primaryButtonText="Create"
-  secondaryButtonText="Cancel"
-  on:click:button--secondary={() => {}}
+  bind:open
   on:open
-  on:close={() => {
-    open = false;
-  }}
-  on:submit={() => {
-    passGraphList();
-  }}
+  on:close
+  on:submit={passGraphList}
+  preventCloseOnClickOutside
 >
-  <div>
-    <p>Example:</p>
-    <img {src} id="eg-img" alt="Graph" />
-    <p>A-B A-C C-D</p>
-  </div>
-  <div>
-    <TextArea
-      {invalid}
-      labelText="Enter Graph structure"
-      bind:value={graphList}
-      {placeholder}
-      on:change={() => {
-        check();
-      }}
-    />
-
+  <ModalHeader label="Create Network" title="Create Network" />
+  <ModalBody>
+    <div>
+      <p>Example:</p>
+      <img {src} id="eg-img" alt="Graph" />
+      <p>A-B A-C C-D</p>
+    </div>
+    <div>
+      <TextArea
+        {invalid}
+        labelText="Enter Graph structure"
+        bind:value={graphList}
+        {placeholder}
+        on:change={() => {
+          check();
+        }}
+      />
+    </div>
     {#if error}
-      <p style="color: red;">Please enter valid input!</p>
+      <InlineNotification
+        lowContrast
+        hideCloseButton
+        kind="error"
+        title="Error:"
+        subtitle={'Please Enter Valid Input'}
+      />
     {/if}
-  </div>
-</Modal>
+  </ModalBody>
+  <ModalFooter primaryButtonText="Create" />
+</ComposedModal>
 
 <style>
   #eg-img {
