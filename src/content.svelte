@@ -83,8 +83,8 @@
     </Column>
     <Column md={5}>
       <div id="network-visjs" bind:this={VISDiv} />
-      <div bind:this={SVGDiv} style="min-height:35rem" />
-      <div style="position: relative;">
+      <div bind:this={SVGDiv} style="min-height: 57.5vh" />
+      <div style="max-height: 30vh;position: relative;">
         <TextArea
           {invalid}
           {invalidText}

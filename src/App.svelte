@@ -62,7 +62,7 @@
 <SideNav fixed={true} style="z-index: 1;" bind:isOpen={isSideNavOpen}>
   <Sidebar />
 </SideNav>
-<Content style="margin-top:4rem;padding: 0;margin-left: 0;">
+<Content style="margin-top:2.5rem;padding: 0;margin-left: 0;">
   {#if graphBase}
     <NetworkEmulator bind:graphBase />
   {:else}
