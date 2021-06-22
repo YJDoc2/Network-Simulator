@@ -19,16 +19,14 @@
   import Help32 from 'carbon-icons-svelte/lib/Help32';
   import Save32 from 'carbon-icons-svelte/lib/Save32';
 
-  let name = 'untitled';
+  let name = 'Untitled';
   let isSideNavOpen = false;
 
   const uploadFile = async (e) => {
     e.preventDefault();
     try {
       const uploaded = await upload();
-      const struct = JSON.parse(uploaded.json);
       name = uploaded.name.replace('.json', '');
-      console.log(struct);
     } catch (error) {
       console.log(error);
     }
@@ -89,7 +87,7 @@
 
 <!-- fixed=true because then the overlay background condition will never become true -->
 <SideNav fixed={true} style="z-index: 1;" bind:isOpen={isSideNavOpen}>
-  <Sidebar bind:graphBase bind:name />
+  <Sidebar bind:graphBase bind:name bind:open={isSideNavOpen} />
 </SideNav>
 <Content style="margin-top:2.5rem;padding: 0;margin-left: 0;">
   {#if graphBase}

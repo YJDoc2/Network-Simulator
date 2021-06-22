@@ -13,7 +13,7 @@
   } from 'carbon-components-svelte';
 
   export let graphBase;
-  export let name = 'untitled';
+  export let name = 'Untitled';
 
   let open = true;
   let error = false;

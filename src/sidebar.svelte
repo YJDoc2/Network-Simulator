@@ -9,8 +9,11 @@
   import { onMount } from 'svelte';
   import { download } from '../lib/ToggleMenu/downloadFile';
   import { upload } from '../lib/ToggleMenu/uploadFile';
+  import { fromSaved } from '../lib/init';
 
   export let name = 'untitled';
+  export let graphBase = null;
+  export let open;
 
   //initialising width of sidebar on mounting
   onMount(() => {
@@ -21,9 +24,15 @@
     e.preventDefault();
     try {
       const uploaded = await upload();
-      const struct = JSON.parse(uploaded.json);
+      let json = JSON.parse(uploaded.json);
+      fromSaved(json);
+      let t = { parsed_nodes: [], parsed_edges: json.edges };
+      for (let k in json.nodes) {
+        t.parsed_edges.push({ id: k, label: k });
+      }
+      graphBase = t;
       name = uploaded.name.replace('.json', '');
-      console.log(struct);
+      open = false;
     } catch (error) {
       console.log(error);
     }
@@ -37,13 +46,27 @@
   <hr />
   <div id="items">
     <Add32 />
-    <a href="/">New Project</a>
+    <a
+      href="/"
+      on:click={(e) => {
+        e.preventDefault();
+        name = 'Untitled';
+        open = false;
+        graphBase = null;
+      }}>New Project</a
+    >
   </div>
   <div id="items">
     <CloudUpload32 />
     <a href="/" on:click={(e) => uploadProject(e)}>Upload Project</a>
   </div>
-  <div id="items" on:click={(e) => download(e, name)}>
+  <div
+    id="items"
+    on:click={(e) => {
+      download(e, name);
+      open = false;
+    }}
+  >
     <CloudDownload32 />
     <a href="/">Download Project</a>
   </div>
