@@ -1,21 +1,25 @@
 <script>
-  import { ParseGraph } from '../lib/parsers';
-  import { TextArea, InlineNotification } from 'carbon-components-svelte';
+  import { ParseGraph } from "../lib/parsers";
+  import {
+    TextArea,
+    InlineNotification,
+    TextInput,
+  } from "carbon-components-svelte";
   import {
     ComposedModal,
     ModalHeader,
     ModalBody,
     ModalFooter,
-  } from 'carbon-components-svelte';
+  } from "carbon-components-svelte";
 
   export let graphBase;
 
   let open = true;
   let error = false;
-  let graphList = '';
-  let src = 'utils/graph.png';
+  let graphList = "";
+  let src = "utils/graph.png";
   let invalid = false;
-  const placeholder = 'A-B\nA-C\nC-D';
+  const placeholder = "A-B\nA-C\nC-D";
 
   const check = () => {
     if (graphList.length <= 0) {
@@ -32,6 +36,9 @@
     } else {
       try {
         // Parse the Input string and get Edges & Nodes in Vis.js compatible format
+        let structure = ParseGraph(graphList.toUpperCase().trim());
+        //storing in localstorage needs a little optimization
+        localStorage.setItem("structure", JSON.stringify(structure));
         graphBase = ParseGraph(graphList.toUpperCase().trim());
         open = false;
       } catch (e) {
@@ -45,12 +52,17 @@
   size="lg"
   bind:open
   on:open
-  on:close
   on:submit={passGraphList}
   preventCloseOnClickOutside
 >
-  <ModalHeader label="Create Network" title="Create Network" />
+  <ModalHeader title="Create Network" />
   <ModalBody>
+    <TextInput
+      placeholder="Enter project Name"
+      required
+      label="Project Name"
+      style="max-width:max-content;font-size: 18px;"
+    />
     <div>
       <p>Example:</p>
       <img {src} id="eg-img" alt="Graph" />
@@ -73,7 +85,7 @@
         hideCloseButton
         kind="error"
         title="Error:"
-        subtitle={'Please Enter Valid Input'}
+        subtitle={"Please Enter Valid Input"}
       />
     {/if}
   </ModalBody>
