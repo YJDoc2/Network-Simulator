@@ -14,10 +14,16 @@
   onMount(() => {
     document.getElementById("mySidenav").style.width = "320px";
   });
-  //Pending
-  const uploadProject = async () => {
-    const jsonF = await upload();
-    console.log({ jsonF });
+
+  const uploadProject = async (e) => {
+    e.preventDefault();
+    try {
+      const jsonF = await upload();
+      const struct = JSON.parse(jsonF);
+      console.log(struct);
+    } catch (error) {
+      console.log(error);
+    }
   };
 </script>
 
@@ -33,9 +39,9 @@
   </div>
   <div id="items">
     <CloudUpload32 />
-    <a href="/" on:click={() => uploadProject()}>Upload Project</a>
+    <a href="/" on:click={(e) => uploadProject(e)}>Upload Project</a>
   </div>
-  <div id="items" on:click={() => download()}>
+  <div id="items" on:click={(e) => download(e)}>
     <CloudDownload32 />
     <a href="/">Download Project</a>
   </div>
