@@ -1,25 +1,28 @@
 <script>
-  import Add32 from "carbon-icons-svelte/lib/Add32";
-  import CloudUpload32 from "carbon-icons-svelte/lib/CloudUpload32";
-  import CloudDownload32 from "carbon-icons-svelte/lib/CloudDownload32";
-  import Bookmark32 from "carbon-icons-svelte/lib/Bookmark32";
-  import BookmarkFilled32 from "carbon-icons-svelte/lib/BookmarkFilled32";
-  import Search32 from "carbon-icons-svelte/lib/Search32";
-  import LogoGithub32 from "carbon-icons-svelte/lib/LogoGithub32";
-  import { onMount } from "svelte";
-  import { download } from "../lib/ToggleMenu/downloadFile";
-  import { upload } from "../lib/ToggleMenu/uploadFile";
+  import Add32 from 'carbon-icons-svelte/lib/Add32';
+  import CloudUpload32 from 'carbon-icons-svelte/lib/CloudUpload32';
+  import CloudDownload32 from 'carbon-icons-svelte/lib/CloudDownload32';
+  import Bookmark32 from 'carbon-icons-svelte/lib/Bookmark32';
+  import BookmarkFilled32 from 'carbon-icons-svelte/lib/BookmarkFilled32';
+  import Search32 from 'carbon-icons-svelte/lib/Search32';
+  import LogoGithub32 from 'carbon-icons-svelte/lib/LogoGithub32';
+  import { onMount } from 'svelte';
+  import { download } from '../lib/ToggleMenu/downloadFile';
+  import { upload } from '../lib/ToggleMenu/uploadFile';
+
+  export let name = 'untitled';
 
   //initialising width of sidebar on mounting
   onMount(() => {
-    document.getElementById("mySidenav").style.width = "320px";
+    document.getElementById('mySidenav').style.width = '320px';
   });
 
   const uploadProject = async (e) => {
     e.preventDefault();
     try {
-      const jsonF = await upload();
-      const struct = JSON.parse(jsonF);
+      const uploaded = await upload();
+      const struct = JSON.parse(uploaded.json);
+      name = uploaded.name.replace('.json', '');
       console.log(struct);
     } catch (error) {
       console.log(error);
@@ -29,8 +32,7 @@
 
 <div id="mySidenav" class="sidenav">
   <div id="title">
-    <h2 style="font-weight: bold;">Project Name</h2>
-    <p style="color: gray;font-size: 15px;">Saved / Last Edited: DateTime</p>
+    <h2 style="font-weight: bold;">{name}</h2>
   </div>
   <hr />
   <div id="items">
@@ -41,7 +43,7 @@
     <CloudUpload32 />
     <a href="/" on:click={(e) => uploadProject(e)}>Upload Project</a>
   </div>
-  <div id="items" on:click={(e) => download(e)}>
+  <div id="items" on:click={(e) => download(e, name)}>
     <CloudDownload32 />
     <a href="/">Download Project</a>
   </div>
