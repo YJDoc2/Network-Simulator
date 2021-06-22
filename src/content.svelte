@@ -1,19 +1,13 @@
 <script>
   import { translateGraphCoordinates, scaleCoordinates } from '../lib/util';
-  import { enqueuePackets } from '../lib';
+  import { init } from '../lib/init';
   import { SVG, Timeline } from '@svgdotjs/svg.js';
   import { onMount } from 'svelte';
   import SidePanel from './sidepanel/SidePanel.svelte';
   import { Grid, Row, Column } from 'carbon-components-svelte';
-  import { Button, TextArea } from 'carbon-components-svelte';
-  import ArrowRight32 from 'carbon-icons-svelte/lib/ArrowRight32';
   import { NODE_RADIUS, NODE_COLOR } from '../lib/constants';
 
   export let graphBase;
-
-  let commands = '';
-  let invalid = false;
-  let invalidText = '';
 
   let SVGDiv;
   let VISDiv;
@@ -28,6 +22,14 @@
     // scale the coordinates, so that if x or y range is less than third of width
     // or height respectively, it will be scaled up
     scaleCoordinates(translated_nodes, SVGDiv.clientWidth, SVGDiv.clientHeight);
+
+    graphBase.parsed_nodes.forEach((node) => {
+      let n = translated_nodes.get(node.id);
+      node.x = n.x;
+      node.y = n.y;
+    });
+    const sim = init(graphBase.parsed_nodes, graphBase.parsed_edges);
+
     // Initialize SVG.JS
     let drawingDiv = SVGDiv;
     let draw = SVG()
@@ -84,37 +86,6 @@
     <Column md={5}>
       <div id="network-visjs" bind:this={VISDiv} />
       <div bind:this={SVGDiv} style="min-height: 57.5vh" />
-      <div style="max-height: 30vh;position: relative;">
-        <TextArea
-          {invalid}
-          {invalidText}
-          style=" resize: none;display: block; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;"
-          bind:value={commands}
-          rows={10}
-          labelText="Enqueue Packets"
-          placeholder="> "
-        />
-        <Button
-          style="position: absolute;bottom: 1rem;right: 0.5rem;"
-          iconDescription="Enqueue Packets"
-          icon={ArrowRight32}
-          kind="tertiary"
-          on:click={() => {
-            try {
-              enqueuePackets(commands);
-              commands = '';
-              invalid = false;
-              invalidText = '';
-            } catch (e) {
-              if (typeof e === 'string') {
-                invalidText = e;
-              } else {
-                invalidText = 'Error in parsing';
-              }
-            }
-          }}
-        />
-      </div>
     </Column>
   </Row>
 </Grid>
