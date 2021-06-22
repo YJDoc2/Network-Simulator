@@ -6,6 +6,8 @@
   import BookmarkFilled32 from 'carbon-icons-svelte/lib/BookmarkFilled32';
   import Search32 from 'carbon-icons-svelte/lib/Search32';
   import LogoGithub32 from 'carbon-icons-svelte/lib/LogoGithub32';
+  import { Packets } from '../lib/packets';
+  import { Logger } from '../lib/logger';
   import { onMount } from 'svelte';
   import { download } from '../lib/ToggleMenu/downloadFile';
   import { upload } from '../lib/ToggleMenu/uploadFile';
@@ -28,7 +30,7 @@
       fromSaved(json);
       let t = { parsed_nodes: [], parsed_edges: json.edges };
       for (let k in json.nodes) {
-        t.parsed_edges.push({ id: k, label: k });
+        t.parsed_nodes.push({ id: k, label: k });
       }
       graphBase = t;
       name = uploaded.name.replace('.json', '');
@@ -51,6 +53,8 @@
       on:click={(e) => {
         e.preventDefault();
         name = 'Untitled';
+        Logger.clear();
+        Packets.clear();
         open = false;
         graphBase = null;
       }}>New Project</a

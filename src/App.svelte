@@ -4,6 +4,8 @@
   import Sidebar from './sidebar.svelte';
   import { download } from '../lib/ToggleMenu/downloadFile';
   import { upload } from '../lib/ToggleMenu/uploadFile';
+  import { fromSaved } from '../lib/init';
+
   import {
     Header,
     HeaderUtilities,
@@ -21,16 +23,6 @@
 
   let name = 'Untitled';
   let isSideNavOpen = false;
-
-  const uploadFile = async (e) => {
-    e.preventDefault();
-    try {
-      const uploaded = await upload();
-      name = uploaded.name.replace('.json', '');
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   // let graphBase = null;
   let graphBase = {
@@ -50,6 +42,24 @@
       // { from: 'B', to: 'E' },
       // { from: 'D', to: 'F' },
     ],
+  };
+
+  const uploadFile = async (e) => {
+    e.preventDefault();
+    try {
+      const uploaded = await upload();
+      let json = JSON.parse(uploaded.json);
+      fromSaved(json);
+      let t = { parsed_nodes: [], parsed_edges: json.edges };
+      for (let k in json.nodes) {
+        t.parsed_nodes.push({ id: k, label: k });
+      }
+      graphBase = t;
+      name = uploaded.name.replace('.json', '');
+      open = false;
+    } catch (error) {
+      console.log(error);
+    }
   };
 </script>
 
