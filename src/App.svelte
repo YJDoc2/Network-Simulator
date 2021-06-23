@@ -1,13 +1,13 @@
 <script>
-  import NetworkEmulator from './content.svelte';
-  import CreateGraph from './modal.svelte';
-  import Sidebar from './sidebar.svelte';
-  import LoadLocalModal from './LoadLocalModal.svelte';
-  import { download } from '../lib/ToggleMenu/downloadFile';
-  import { upload } from '../lib/ToggleMenu/uploadFile';
-  import { fromSaved } from '../lib/init';
-  import { saveToLocal } from '../lib/ToggleMenu/local';
-  import { LOCAL_SAVE_KEY } from '../lib/constants';
+  import NetworkEmulator from "./content.svelte";
+  import CreateGraph from "./modal.svelte";
+  import Sidebar from "./sidebar.svelte";
+  import LoadLocalModal from "./LoadLocalModal.svelte";
+  import { download } from "../lib/ToggleMenu/downloadFile";
+  import { upload } from "../lib/ToggleMenu/uploadFile";
+  import { fromSaved } from "../lib/init";
+  import { saveToLocal } from "../lib/ToggleMenu/local";
+  import { LOCAL_SAVE_KEY } from "../lib/constants";
   import {
     Header,
     HeaderUtilities,
@@ -15,24 +15,24 @@
     SkipToContent,
     SideNav,
     Content,
-  } from 'carbon-components-svelte';
-  import CloudUpload32 from 'carbon-icons-svelte/lib/CloudUpload32';
-  import CloudUpload16 from 'carbon-icons-svelte/lib/CloudUpload16';
-  import CloudDownload32 from 'carbon-icons-svelte/lib/CloudDownload32';
-  import FetchUpload32 from 'carbon-icons-svelte/lib/FetchUpload32';
-  import FetchUpload16 from 'carbon-icons-svelte/lib/FetchUpload16';
-  import Help32 from 'carbon-icons-svelte/lib/Help32';
-  import Help16 from 'carbon-icons-svelte/lib/Help16';
-  import Save32 from 'carbon-icons-svelte/lib/Save32';
+  } from "carbon-components-svelte";
+  import CloudUpload32 from "carbon-icons-svelte/lib/CloudUpload32";
+  import CloudUpload16 from "carbon-icons-svelte/lib/CloudUpload16";
+  import CloudDownload32 from "carbon-icons-svelte/lib/CloudDownload32";
+  import FetchUpload32 from "carbon-icons-svelte/lib/FetchUpload32";
+  import FetchUpload16 from "carbon-icons-svelte/lib/FetchUpload16";
+  import Help32 from "carbon-icons-svelte/lib/Help32";
+  import Help16 from "carbon-icons-svelte/lib/Help16";
+  import Save32 from "carbon-icons-svelte/lib/Save32";
 
-  let name = 'Untitled';
+  let name = "Untitled";
   let isSideNavOpen = false;
   let loadLocalOpen = false;
   let graphBase = null;
   const loadProject = (n) => {
     let projects = JSON.parse(localStorage.getItem(LOCAL_SAVE_KEY)) || {};
     if (!projects[n]) {
-      throw 'Internal Error : tried to open non-existing project';
+      throw "Internal Error : tried to open non-existing project";
     }
     fromSaved(projects[n]);
 
@@ -56,7 +56,7 @@
         t.parsed_nodes.push({ id: k, label: k });
       }
       graphBase = t;
-      name = uploaded.name.replace('.json', '');
+      name = uploaded.name.replace(".json", "");
       saveToLocal(name);
       open = false;
     } catch (error) {
@@ -65,13 +65,13 @@
   };
 
   //retrieve the current project on refresh
-  let lastSaved = localStorage.getItem('lastSaved');
+  let lastSaved = localStorage.getItem("lastSaved");
   if (lastSaved !== null) {
     loadProject(lastSaved);
   }
   //Use Ctrl+S to Save
-  document.addEventListener('keydown', function (event) {
-    if (event.code == 'KeyS' && (event.ctrlKey || event.metaKey)) {
+  document.addEventListener("keydown", function (event) {
+    if (event.code == "KeyS" && (event.ctrlKey || event.metaKey)) {
       event.preventDefault();
       saveToLocal(name);
     }
@@ -91,7 +91,7 @@
   <HeaderUtilities>
     <HeaderGlobalAction
       aria-label="Upload"
-      title={'Upload'}
+      title={"Upload"}
       icon={CloudUpload32}
       on:click={(e) => {
         uploadFile(e);
@@ -99,7 +99,7 @@
     />
     <HeaderGlobalAction
       aria-label="Download"
-      title={'Download'}
+      title={"Download"}
       icon={CloudDownload32}
       on:click={(e) => {
         download(e, name);
@@ -107,7 +107,7 @@
     />
     <HeaderGlobalAction
       aria-label="Local Save"
-      title={'Local Save'}
+      title={"Local Save"}
       icon={Save32}
       on:click={() => {
         saveToLocal(name);
@@ -115,13 +115,13 @@
     />
     <HeaderGlobalAction
       aria-label="Load Local"
-      title={'Load Local'}
+      title={"Load Local"}
       icon={FetchUpload32}
       on:click={() => {
         loadLocalOpen = true;
       }}
     />
-    <HeaderGlobalAction aria-label="Help" title={'Help'} icon={Help32} />
+    <HeaderGlobalAction aria-label="Help" title={"Help"} icon={Help32} />
   </HeaderUtilities>
 </Header>
 
@@ -130,6 +130,7 @@
   <Sidebar
     bind:graphBase
     bind:name
+    bind:modalOpen
     bind:loadLocal={loadLocalOpen}
     bind:open={isSideNavOpen}
   />
@@ -148,7 +149,10 @@
         />
       </p>
     </div>
-    <CreateGraph bind:graphBase bind:name />
+    <CreateGraph bind:modalOpen bind:graphBase bind:name />
+  {/if}
+  {#if modalOpen}
+    <CreateGraph bind:modalOpen bind:graphBase bind:name />
   {/if}
   {#if loadLocalOpen}
     <LoadLocalModal bind:open={loadLocalOpen} {loadProject} />
