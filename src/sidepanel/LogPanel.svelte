@@ -1,9 +1,9 @@
 <script>
-  import { Logger } from "../../lib/logger";
-  import { Packets } from "../../lib/packets";
-  import { onMount, afterUpdate } from "svelte";
-  import { Button, Modal, Tile } from "carbon-components-svelte";
-  import DataView32 from "carbon-icons-svelte/lib/DataView32";
+  import { Logger } from '../../lib/logger';
+  import { Packets } from '../../lib/packets';
+  import { onMount, afterUpdate } from 'svelte';
+  import { Button, Modal, Tile } from 'carbon-components-svelte';
+  import DataView32 from 'carbon-icons-svelte/lib/DataView32';
 
   let logs = [];
   let packets = [];
@@ -19,9 +19,12 @@
     });
   });
   afterUpdate(() => {
-    scroll.scrollTop = scroll.scrollHeight;
+    if (packets.length != 0) {
+      scroll.scrollTop = scroll.scrollHeight;
+    }
   });
 </script>
+
 <div class="paper">
   <div style="display: flex;">
     <h3 style="flex:1">Logs</h3>

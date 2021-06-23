@@ -1,13 +1,13 @@
 <script>
-  import NetworkEmulator from "./content.svelte";
-  import CreateGraph from "./modal.svelte";
-  import Sidebar from "./sidebar.svelte";
-  import LoadLocalModal from "./LoadLocalModal.svelte";
-  import { download } from "../lib/ToggleMenu/downloadFile";
-  import { upload } from "../lib/ToggleMenu/uploadFile";
-  import { fromSaved } from "../lib/init";
-  import { saveToLocal } from "../lib/ToggleMenu/local";
-  import { LOCAL_SAVE_KEY } from "../lib/constants";
+  import NetworkEmulator from './content.svelte';
+  import CreateGraph from './modal.svelte';
+  import Sidebar from './sidebar.svelte';
+  import LoadLocalModal from './LoadLocalModal.svelte';
+  import { download } from '../lib/ToggleMenu/downloadFile';
+  import { upload } from '../lib/ToggleMenu/uploadFile';
+  import { fromSaved } from '../lib/init';
+  import { saveToLocal } from '../lib/ToggleMenu/local';
+  import { LOCAL_SAVE_KEY } from '../lib/constants';
   import {
     Header,
     HeaderUtilities,
@@ -15,41 +15,25 @@
     SkipToContent,
     SideNav,
     Content,
-  } from "carbon-components-svelte";
-  import CloudUpload32 from "carbon-icons-svelte/lib/CloudUpload32";
-  import CloudUpload16 from "carbon-icons-svelte/lib/CloudUpload16";
-  import CloudDownload32 from "carbon-icons-svelte/lib/CloudDownload32";
-  import FetchUpload32 from "carbon-icons-svelte/lib/FetchUpload32";
-  import FetchUpload16 from "carbon-icons-svelte/lib/FetchUpload16";
-  import Help32 from "carbon-icons-svelte/lib/Help32";
-  import Help16 from "carbon-icons-svelte/lib/Help16";
-  import Save32 from "carbon-icons-svelte/lib/Save32";
+  } from 'carbon-components-svelte';
+  import CloudUpload32 from 'carbon-icons-svelte/lib/CloudUpload32';
+  import CloudUpload16 from 'carbon-icons-svelte/lib/CloudUpload16';
+  import CloudDownload32 from 'carbon-icons-svelte/lib/CloudDownload32';
+  import FetchUpload32 from 'carbon-icons-svelte/lib/FetchUpload32';
+  import FetchUpload16 from 'carbon-icons-svelte/lib/FetchUpload16';
+  import Help32 from 'carbon-icons-svelte/lib/Help32';
+  import Help16 from 'carbon-icons-svelte/lib/Help16';
+  import Save32 from 'carbon-icons-svelte/lib/Save32';
 
-  let name = "";
+  let name = 'Untitled';
   let isSideNavOpen = false;
-  let modalOpen = false;
   let loadLocalOpen = false;
-  let graphBase;
+  let graphBase = null;
   //retrieve the current project on refresh
-  let a = localStorage.getItem("name");
-  if (a !== null && a.length) {
-    let projects = JSON.parse(localStorage.getItem(LOCAL_SAVE_KEY));
-    fromSaved(projects[a]);
-    let t = { parsed_nodes: [], parsed_edges: projects[a].edges };
-    for (let k in projects[a].nodes) {
-      t.parsed_nodes.push({ id: k, label: k });
-    }
-    name = a;
-    graphBase = t;
-  } else {
-    graphBase = null;
-    modalOpen = true;
-  }
-
   const loadProject = (n) => {
     let projects = JSON.parse(localStorage.getItem(LOCAL_SAVE_KEY)) || {};
     if (!projects[n]) {
-      throw "Internal Error : tried to open non-existing project";
+      throw 'Internal Error : tried to open non-existing project';
     }
 
     fromSaved(projects[n]);
@@ -73,13 +57,18 @@
         t.parsed_nodes.push({ id: k, label: k });
       }
       graphBase = t;
-      name = uploaded.name.replace(".json", "");
+      name = uploaded.name.replace('.json', '');
       saveToLocal(name);
       open = false;
     } catch (error) {
       console.log(error);
     }
   };
+
+  let lastSaved = localStorage.getItem('lastSaved');
+  if (lastSaved !== null) {
+    loadProject(lastSaved);
+  }
 </script>
 
 <Header
@@ -130,7 +119,6 @@
   <Sidebar
     bind:graphBase
     bind:name
-    bind:modalOpen
     bind:loadLocal={loadLocalOpen}
     bind:open={isSideNavOpen}
   />
@@ -149,10 +137,7 @@
         />
       </p>
     </div>
-    <CreateGraph bind:modalOpen bind:graphBase bind:name />
-  {/if}
-  {#if modalOpen}
-    <CreateGraph bind:modalOpen bind:graphBase bind:name />
+    <CreateGraph bind:graphBase bind:name />
   {/if}
   {#if loadLocalOpen}
     <LoadLocalModal bind:open={loadLocalOpen} {loadProject} />
