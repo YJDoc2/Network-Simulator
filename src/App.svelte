@@ -130,6 +130,7 @@
   <Sidebar
     bind:graphBase
     bind:name
+    bind:modalOpen
     bind:loadLocal={loadLocalOpen}
     bind:open={isSideNavOpen}
   />
@@ -148,7 +149,10 @@
         />
       </p>
     </div>
-    <CreateGraph bind:graphBase bind:name />
+    <CreateGraph bind:modalOpen bind:graphBase bind:name />
+  {/if}
+  {#if modalOpen}
+    <CreateGraph bind:modalOpen bind:graphBase bind:name />
   {/if}
   {#if loadLocalOpen}
     <LoadLocalModal bind:open={loadLocalOpen} {loadProject} />

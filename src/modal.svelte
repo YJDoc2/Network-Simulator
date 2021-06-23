@@ -15,6 +15,7 @@
 
   export let graphBase;
   export let name = "Untitled";
+  export let modalOpen = true;
 
   let error = false;
   let graphList = "";
@@ -50,7 +51,7 @@
 
 <ComposedModal
   size="lg"
-  bind:open
+  bind:open={modalOpen}
   on:open
   on:close
   on:submit={() => {
