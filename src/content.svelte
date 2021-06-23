@@ -106,7 +106,11 @@
     </Column>
     <Column md={5}>
       <div id="network-visjs" bind:this={VISDiv} />
-      <div bind:this={SVGDiv} style="min-height: 57.5vh" />
+      <div
+        bind:this={SVGDiv}
+        style="min-height: 57.5vh;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+      "
+      />
     </Column>
   </Row>
 </Grid>

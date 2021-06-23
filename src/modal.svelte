@@ -41,6 +41,7 @@
         //storing in localstorage needs a little optimization
         localStorage.setItem("structure", JSON.stringify(structure));
         graphBase = ParseGraph(graphList.toUpperCase().trim());
+        console.log(graphBase);
         open = false;
       } catch (e) {
         console.log(e);
