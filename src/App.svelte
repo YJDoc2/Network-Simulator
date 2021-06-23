@@ -17,10 +17,12 @@
     Content,
   } from 'carbon-components-svelte';
   import CloudUpload32 from 'carbon-icons-svelte/lib/CloudUpload32';
+  import CloudUpload16 from 'carbon-icons-svelte/lib/CloudUpload16';
   import CloudDownload32 from 'carbon-icons-svelte/lib/CloudDownload32';
-  import Share32 from 'carbon-icons-svelte/lib/Share32';
   import FetchUpload32 from 'carbon-icons-svelte/lib/FetchUpload32';
+  import FetchUpload16 from 'carbon-icons-svelte/lib/FetchUpload16';
   import Help32 from 'carbon-icons-svelte/lib/Help32';
+  import Help16 from 'carbon-icons-svelte/lib/Help16';
   import Save32 from 'carbon-icons-svelte/lib/Save32';
 
   let name = 'Untitled';
@@ -28,24 +30,6 @@
 
   let loadLocalOpen = false;
   let graphBase = null;
-  // let graphBase = {
-  //   parsed_nodes: [
-  //     { id: 'A', lable: 'A' },
-  //     { id: 'B', lable: 'B' },
-  //     { id: 'C', lable: 'C' },
-  //     { id: 'D', lable: 'D' },
-  //     // { id: 'E', lable: 'E' },
-  //     // { id: 'F', lable: 'F' },
-  //   ],
-  //   parsed_edges: [
-  //     { from: 'A', to: 'B' },
-  //     { from: 'A', to: 'C' },
-  //     { from: 'C', to: 'D' },
-  //     { from: 'B', to: 'D' },
-  //     // { from: 'B', to: 'E' },
-  //     // { from: 'D', to: 'F' },
-  //   ],
-  // };
 
   const loadProject = (n) => {
     let projects = JSON.parse(localStorage.getItem(LOCAL_SAVE_KEY)) || {};
@@ -122,7 +106,6 @@
       }}
     />
     <HeaderGlobalAction aria-label="Help" icon={Help32} />
-    <HeaderGlobalAction aria-label="Share" icon={Share32} />
   </HeaderUtilities>
 </Header>
 
@@ -139,9 +122,39 @@
   {#if graphBase}
     <NetworkEmulator bind:graphBase />
   {:else}
+    <div style="margin-top:20vh; text-align: center;">
+      <h1 style="font-size: 7rem;">Network Emulator</h1>
+      <h3>A simple Network Simulation tool</h3>
+      <p style="margin-top: 1.5rem; font-size: 1.5rem;">
+        Click <Help16 /> in navbar to get more information.<br />
+        Click <CloudUpload16 /> to upload a config file for simulation. <br />
+        Click <FetchUpload16 /> to load a saved project from local storage.<br
+        />
+      </p>
+    </div>
     <CreateGraph bind:graphBase bind:name />
   {/if}
   {#if loadLocalOpen}
     <LoadLocalModal bind:open={loadLocalOpen} {loadProject} />
   {/if}
 </Content>
+<div id="footer">
+  Developed by <span> &nbsp; &bullet; &nbsp;</span> Yashodhan Joshi
+  <span> &nbsp; &bullet; &nbsp;</span>
+  Yatharth Vyas <span> &nbsp; &bullet; &nbsp;</span> Vatsal Soni
+  <span> &nbsp; &bullet; &nbsp;</span> Tejas Ghone
+</div>
+
+<style>
+  #footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 0.5rem;
+    width: 100%;
+    background-color: #000000;
+    color: #ffffff;
+    font-size: 1.2rem;
+    text-align: center;
+  }
+</style>
