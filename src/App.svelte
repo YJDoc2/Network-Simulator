@@ -2,10 +2,12 @@
   import NetworkEmulator from './content.svelte';
   import CreateGraph from './modal.svelte';
   import Sidebar from './sidebar.svelte';
+  import LoadLocalModal from './LoadLocalModal.svelte';
   import { download } from '../lib/ToggleMenu/downloadFile';
   import { upload } from '../lib/ToggleMenu/uploadFile';
   import { fromSaved } from '../lib/init';
-
+  import { saveToLocal } from '../lib/ToggleMenu/local';
+  import { LOCAL_SAVE_KEY } from '../lib/constants';
   import {
     Header,
     HeaderUtilities,
@@ -24,24 +26,41 @@
   let name = 'Untitled';
   let isSideNavOpen = false;
 
-  // let graphBase = null;
-  let graphBase = {
-    parsed_nodes: [
-      { id: 'A', lable: 'A' },
-      { id: 'B', lable: 'B' },
-      { id: 'C', lable: 'C' },
-      { id: 'D', lable: 'D' },
-      // { id: 'E', lable: 'E' },
-      // { id: 'F', lable: 'F' },
-    ],
-    parsed_edges: [
-      { from: 'A', to: 'B' },
-      { from: 'A', to: 'C' },
-      { from: 'C', to: 'D' },
-      { from: 'B', to: 'D' },
-      // { from: 'B', to: 'E' },
-      // { from: 'D', to: 'F' },
-    ],
+  let loadLocalOpen = false;
+  let graphBase = null;
+  // let graphBase = {
+  //   parsed_nodes: [
+  //     { id: 'A', lable: 'A' },
+  //     { id: 'B', lable: 'B' },
+  //     { id: 'C', lable: 'C' },
+  //     { id: 'D', lable: 'D' },
+  //     // { id: 'E', lable: 'E' },
+  //     // { id: 'F', lable: 'F' },
+  //   ],
+  //   parsed_edges: [
+  //     { from: 'A', to: 'B' },
+  //     { from: 'A', to: 'C' },
+  //     { from: 'C', to: 'D' },
+  //     { from: 'B', to: 'D' },
+  //     // { from: 'B', to: 'E' },
+  //     // { from: 'D', to: 'F' },
+  //   ],
+  // };
+
+  const loadProject = (n) => {
+    let projects = JSON.parse(localStorage.getItem(LOCAL_SAVE_KEY)) || {};
+    if (!projects[n]) {
+      throw 'Internal Error : tried to open non-existing project';
+    }
+
+    fromSaved(projects[n]);
+    let t = { parsed_nodes: [], parsed_edges: projects[n].edges };
+    for (let k in projects[n].nodes) {
+      t.parsed_nodes.push({ id: k, label: k });
+    }
+    graphBase = t;
+    name = n;
+    loadLocalOpen = false;
   };
 
   const uploadFile = async (e) => {
@@ -88,8 +107,20 @@
         download(e, name);
       }}
     />
-    <HeaderGlobalAction aria-label="Local Save" icon={Save32} />
-    <HeaderGlobalAction aria-label="Local Load" icon={FetchUpload32} />
+    <HeaderGlobalAction
+      aria-label="Local Save"
+      icon={Save32}
+      on:click={() => {
+        saveToLocal(name);
+      }}
+    />
+    <HeaderGlobalAction
+      aria-label="Local Load"
+      icon={FetchUpload32}
+      on:click={() => {
+        loadLocalOpen = true;
+      }}
+    />
     <HeaderGlobalAction aria-label="Help" icon={Help32} />
     <HeaderGlobalAction aria-label="Share" icon={Share32} />
   </HeaderUtilities>
@@ -97,12 +128,20 @@
 
 <!-- fixed=true because then the overlay background condition will never become true -->
 <SideNav fixed={true} style="z-index: 1;" bind:isOpen={isSideNavOpen}>
-  <Sidebar bind:graphBase bind:name bind:open={isSideNavOpen} />
+  <Sidebar
+    bind:graphBase
+    bind:name
+    bind:loadLocal={loadLocalOpen}
+    bind:open={isSideNavOpen}
+  />
 </SideNav>
 <Content style="margin-top:2.5rem;padding: 0;margin-left: 0;">
   {#if graphBase}
     <NetworkEmulator bind:graphBase />
   {:else}
     <CreateGraph bind:graphBase bind:name />
+  {/if}
+  {#if loadLocalOpen}
+    <LoadLocalModal bind:open={loadLocalOpen} {loadProject} />
   {/if}
 </Content>

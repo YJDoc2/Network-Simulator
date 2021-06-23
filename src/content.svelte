@@ -57,6 +57,22 @@
   onMount(() => {
     // Initialize SVG.JS
     draw = SVG().addTo(SVGDiv).size(SVGDiv.clientWidth, SVGDiv.clientHeight);
+    listener.subscribe(() => {
+      try {
+        let s = getSimulator();
+        drawGraph(s);
+        return;
+      } catch (e) {
+        console.log(e);
+      }
+    });
+    try {
+      let s = getSimulator();
+      drawGraph(s);
+      return;
+    } catch (e) {
+      console.log(e);
+    }
     // Get Nodes that are friendly with DOM coordinate system
     const translated_nodes = translateGraphCoordinates(
       graphBase,
@@ -74,15 +90,6 @@
       node.y = n.y;
     });
     init(graphBase.parsed_nodes, graphBase.parsed_edges);
-    listener.subscribe(() => {
-      try {
-        let s = getSimulator();
-        drawGraph(s);
-        return;
-      } catch (e) {
-        console.log(e);
-      }
-    });
   });
 
   // let timeline = new Timeline();

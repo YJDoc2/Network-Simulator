@@ -57,7 +57,9 @@
   </div>
 </div>
 
-<NodeDataModal {selected} bind:open={configOpen} />
+{#if configOpen}
+  <NodeDataModal {selected} bind:open={configOpen} />
+{/if}
 {#if queueOpen}
   <NodeQueueModal {selected} bind:open={queueOpen} />
 {/if}

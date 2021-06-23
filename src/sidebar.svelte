@@ -12,10 +12,12 @@
   import { download } from '../lib/ToggleMenu/downloadFile';
   import { upload } from '../lib/ToggleMenu/uploadFile';
   import { fromSaved } from '../lib/init';
+  import { saveToLocal } from '../lib/ToggleMenu/local';
 
   export let name = 'untitled';
   export let graphBase = null;
   export let open;
+  export let loadLocal = false;
 
   //initialising width of sidebar on mounting
   onMount(() => {
@@ -76,11 +78,24 @@
   </div>
   <div id="items">
     <Bookmark32 />
-    <a href="/">Save to Library</a>
+    <a
+      href="/"
+      on:click={(e) => {
+        e.preventDefault();
+        saveToLocal(name);
+      }}>Save to Library</a
+    >
   </div>
   <div id="items">
     <BookmarkFilled32 />
-    <a href="/">Load project from Library</a>
+    <a
+      href="/"
+      on:click={(e) => {
+        e.preventDefault();
+        loadLocal = true;
+        open = false;
+      }}>Load project from Library</a
+    >
   </div>
   <div id="items" style="display: flex;">
     <Search32 />
