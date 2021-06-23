@@ -34,6 +34,7 @@
       for (let k in json.nodes) {
         t.parsed_nodes.push({ id: k, label: k });
       }
+      localStorage.setItem("structure", JSON.stringify(t));
       graphBase = t;
       name = uploaded.name.replace(".json", "");
 
