@@ -14,8 +14,8 @@
 
   export let graphBase;
   export let name = "Untitled";
+  export let modalOpen = true;
 
-  let open = true;
   let error = false;
   let graphList = "";
   let src = "utils/graph.png";
@@ -37,12 +37,10 @@
     } else {
       try {
         // Parse the Input string and get Edges & Nodes in Vis.js compatible format
-        let structure = ParseGraph(graphList.toUpperCase().trim());
-        //storing in localstorage needs a little optimization
-        localStorage.setItem("structure", JSON.stringify(structure));
+        // console.log("NEW");
         graphBase = ParseGraph(graphList.toUpperCase().trim());
         console.log(graphBase);
-        open = false;
+        modalOpen = false;
       } catch (e) {
         console.log(e);
         error = true;
@@ -53,7 +51,7 @@
 
 <ComposedModal
   size="lg"
-  bind:open
+  bind:open={modalOpen}
   on:open
   on:close
   on:submit={() => {

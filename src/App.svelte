@@ -25,11 +25,26 @@
   import Help16 from "carbon-icons-svelte/lib/Help16";
   import Save32 from "carbon-icons-svelte/lib/Save32";
 
-  let name = "Untitled";
+  let name = "";
   let isSideNavOpen = false;
-
+  let modalOpen = false;
   let loadLocalOpen = false;
-  let graphBase = null;
+  let graphBase;
+  //retrieve the current project on refresh
+  let a = localStorage.getItem("name");
+  if (a !== null && a.length) {
+    let projects = JSON.parse(localStorage.getItem(LOCAL_SAVE_KEY));
+    fromSaved(projects[a]);
+    let t = { parsed_nodes: [], parsed_edges: projects[a].edges };
+    for (let k in projects[a].nodes) {
+      t.parsed_nodes.push({ id: k, label: k });
+    }
+    name = a;
+    graphBase = t;
+  } else {
+    graphBase = null;
+    modalOpen = true;
+  }
 
   const loadProject = (n) => {
     let projects = JSON.parse(localStorage.getItem(LOCAL_SAVE_KEY)) || {};
@@ -59,6 +74,7 @@
       }
       graphBase = t;
       name = uploaded.name.replace(".json", "");
+      saveToLocal(name);
       open = false;
     } catch (error) {
       console.log(error);
@@ -114,13 +130,14 @@
   <Sidebar
     bind:graphBase
     bind:name
+    bind:modalOpen
     bind:loadLocal={loadLocalOpen}
     bind:open={isSideNavOpen}
   />
 </SideNav>
 <Content style="margin-top:2.5rem;padding: 0;margin-left: 0;">
   {#if graphBase}
-    <NetworkEmulator bind:graphBase />
+    <NetworkEmulator bind:name bind:graphBase />
   {:else}
     <div style="margin-top:20vh; text-align: center;">
       <h1 style="font-size: 7rem;">Network Emulator</h1>
@@ -132,7 +149,10 @@
         />
       </p>
     </div>
-    <CreateGraph bind:graphBase bind:name />
+    <CreateGraph bind:modalOpen bind:graphBase bind:name />
+  {/if}
+  {#if modalOpen}
+    <CreateGraph bind:modalOpen bind:graphBase bind:name />
   {/if}
   {#if loadLocalOpen}
     <LoadLocalModal bind:open={loadLocalOpen} {loadProject} />

@@ -7,8 +7,10 @@
   import SidePanel from "./sidepanel/SidePanel.svelte";
   import { Grid, Row, Column } from "carbon-components-svelte";
   import { NODE_RADIUS, NODE_COLOR } from "../lib/constants";
+  import { saveToLocal } from "../lib/ToggleMenu/local";
 
   export let graphBase;
+  export let name;
 
   let SVGDiv;
   let VISDiv;
@@ -56,6 +58,7 @@
 
   onMount(() => {
     // Initialize SVG.JS
+
     draw = SVG().addTo(SVGDiv).size(SVGDiv.clientWidth, SVGDiv.clientHeight);
     listener.subscribe(() => {
       try {
@@ -90,6 +93,8 @@
       node.y = n.y;
     });
     init(graphBase.parsed_nodes, graphBase.parsed_edges);
+    //Initial save to library
+    saveToLocal(name);
   });
 
   // let timeline = new Timeline();
