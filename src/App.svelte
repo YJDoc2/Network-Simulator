@@ -25,7 +25,7 @@
   import Help16 from "carbon-icons-svelte/lib/Help16";
   import Save32 from "carbon-icons-svelte/lib/Save32";
 
-  let name = "Untitled";
+  let name = "";
   let isSideNavOpen = false;
   let loadLocalOpen = false;
   let graphBase = null;
@@ -119,6 +119,7 @@
   <Sidebar
     bind:graphBase
     bind:name
+    bind:modalOpen
     bind:loadLocal={loadLocalOpen}
     bind:open={isSideNavOpen}
   />
@@ -137,7 +138,10 @@
         />
       </p>
     </div>
-    <CreateGraph bind:graphBase bind:name />
+    <CreateGraph bind:modalOpen bind:graphBase bind:name />
+  {/if}
+  {#if modalOpen}
+    <CreateGraph bind:modalOpen bind:graphBase bind:name />
   {/if}
   {#if loadLocalOpen}
     <LoadLocalModal bind:open={loadLocalOpen} {loadProject} />
