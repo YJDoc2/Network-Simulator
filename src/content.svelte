@@ -1,14 +1,16 @@
 <script>
-  import { translateGraphCoordinates, scaleCoordinates } from '../lib/util';
-  import { getSimulator, init } from '../lib/init';
-  import { listener } from '../lib/init';
-  import { SVG, Timeline } from '@svgdotjs/svg.js';
-  import { onMount } from 'svelte';
-  import SidePanel from './sidepanel/SidePanel.svelte';
-  import { Grid, Row, Column } from 'carbon-components-svelte';
-  import { NODE_RADIUS, NODE_COLOR } from '../lib/constants';
+  import { translateGraphCoordinates, scaleCoordinates } from "../lib/util";
+  import { getSimulator, init } from "../lib/init";
+  import { listener } from "../lib/init";
+  import { SVG, Timeline } from "@svgdotjs/svg.js";
+  import { onMount } from "svelte";
+  import SidePanel from "./sidepanel/SidePanel.svelte";
+  import { Grid, Row, Column } from "carbon-components-svelte";
+  import { NODE_RADIUS, NODE_COLOR } from "../lib/constants";
+  import { saveToLocal } from "../lib/ToggleMenu/local";
 
   export let graphBase;
+  export let name;
 
   let SVGDiv;
   let VISDiv;
@@ -28,7 +30,7 @@
         nodes.get(`${edge.to}`).x,
         nodes.get(`${edge.to}`).y
       );
-      temp.stroke({ color: NODE_COLOR, width: 7, linecap: 'round' });
+      temp.stroke({ color: NODE_COLOR, width: 7, linecap: "round" });
       edge_lines.push(temp);
     }
     sim.edges.forEach(DrawLine);
@@ -45,7 +47,7 @@
       );
       draw
         .plain(name)
-        .font({ fill: '#000000', size: '2rem' })
+        .font({ fill: "#000000", size: "2rem" })
         .move(
           // here we subtract 1 from node length to skip single lettered names
           node.x - NODE_RADIUS / 2 - (name.length - 1) * 5,
@@ -56,6 +58,7 @@
 
   onMount(() => {
     // Initialize SVG.JS
+
     draw = SVG().addTo(SVGDiv).size(SVGDiv.clientWidth, SVGDiv.clientHeight);
     listener.subscribe(() => {
       try {
@@ -90,6 +93,8 @@
       node.y = n.y;
     });
     init(graphBase.parsed_nodes, graphBase.parsed_edges);
+    //Initial save to library
+    saveToLocal(name);
   });
 
   // let timeline = new Timeline();
@@ -106,7 +111,11 @@
     </Column>
     <Column md={5}>
       <div id="network-visjs" bind:this={VISDiv} />
-      <div bind:this={SVGDiv} style="min-height: 57.5vh" />
+      <div
+        bind:this={SVGDiv}
+        style="min-height: 57.5vh;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+      "
+      />
     </Column>
   </Row>
 </Grid>
