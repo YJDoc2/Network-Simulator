@@ -34,8 +34,8 @@
     if (!projects[n]) {
       throw "Internal Error : tried to open non-existing project";
     }
-
     fromSaved(projects[n]);
+
     let t = { parsed_nodes: [], parsed_edges: projects[n].edges };
     for (let k in projects[n].nodes) {
       t.parsed_nodes.push({ id: k, label: k });

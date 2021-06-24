@@ -1,13 +1,14 @@
 <script>
-  import { translateGraphCoordinates, scaleCoordinates } from "../lib/util";
-  import { getSimulator, init } from "../lib/init";
-  import { listener } from "../lib/init";
-  import { SVG, Timeline } from "@svgdotjs/svg.js";
-  import { onMount } from "svelte";
-  import SidePanel from "./sidepanel/SidePanel.svelte";
-  import { Grid, Row, Column } from "carbon-components-svelte";
-  import { NODE_RADIUS, NODE_COLOR } from "../lib/constants";
-  import { saveToLocal } from "../lib/ToggleMenu/local";
+  import { translateGraphCoordinates, scaleCoordinates } from '../lib/util';
+  import { getSimulator, init } from '../lib/init';
+  import { listener } from '../lib/init';
+  import { SVG } from '@svgdotjs/svg.js';
+  import { onMount } from 'svelte';
+  import SidePanel from './sidepanel/SidePanel.svelte';
+  import { Grid, Row, Column } from 'carbon-components-svelte';
+  import { NODE_RADIUS, NODE_COLOR, PACKET_RADIUS } from '../lib/constants';
+  import { saveToLocal } from '../lib/ToggleMenu/local';
+  import { sortPackets, getOffset } from '../lib/animation/index';
 
   export let graphBase;
   export let name;
@@ -30,7 +31,7 @@
         nodes.get(`${edge.to}`).x,
         nodes.get(`${edge.to}`).y
       );
-      temp.stroke({ color: NODE_COLOR, width: 7, linecap: "round" });
+      temp.stroke({ color: NODE_COLOR, width: 7, linecap: 'round' });
       edge_lines.push(temp);
     }
     sim.edges.forEach(DrawLine);
@@ -47,7 +48,7 @@
       );
       draw
         .plain(name)
-        .font({ fill: "#000000", size: "2rem" })
+        .font({ fill: '#000000', size: '2rem' })
         .move(
           // here we subtract 1 from node length to skip single lettered names
           node.x - NODE_RADIUS / 2 - (name.length - 1) * 5,
@@ -74,6 +75,21 @@
     try {
       let s = getSimulator();
       drawGraph(s);
+      let from = s.nodes.get('B');
+      let to = s.nodes.get('A');
+
+      let [x, y] = getOffset(from, to);
+
+      draw
+        .circle(PACKET_RADIUS)
+        .fill('#FF0000')
+        .move(from.x + x - PACKET_RADIUS / 2, from.y - y - PACKET_RADIUS / 2);
+
+      draw
+        .circle(PACKET_RADIUS)
+        .fill('#FF0000')
+        .move(to.x - x - PACKET_RADIUS / 2, to.y - y - PACKET_RADIUS / 2);
+
       return;
     } catch (e) {
       console.log(e);
@@ -95,6 +111,7 @@
       node.y = n.y;
     });
     init(graphBase.parsed_nodes, graphBase.parsed_edges);
+
     //Initial save to library
     saveToLocal(name);
   });
