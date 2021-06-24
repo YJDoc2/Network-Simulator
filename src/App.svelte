@@ -57,7 +57,7 @@
       }
       graphBase = t;
       name = uploaded.name.replace(".json", "");
-      saveToLocal(name);
+      localStorage.setItem("name", name);
       open = false;
     } catch (error) {
       console.log(error);
