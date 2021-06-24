@@ -17,7 +17,6 @@
   export let name = "untitled";
   export let graphBase = null;
   export let open;
-  export let modalOpen;
   export let loadLocal = false;
 
   //initialising width of sidebar on mounting
@@ -66,7 +65,17 @@
     }}
   >
     <Add32 />
-    <a href="/">New Project</a>
+    <a
+      href="/"
+      on:click={(e) => {
+        e.preventDefault();
+        name = "Untitled";
+        Logger.clear();
+        Packets.clear();
+        open = false;
+        graphBase = null;
+      }}>New Project</a
+    >
   </div>
   <div id="items" on:click={(e) => uploadProject(e)}>
     <CloudUpload32 />
