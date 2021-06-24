@@ -1,13 +1,13 @@
 <script>
-  import NetworkEmulator from './content.svelte';
-  import CreateGraph from './modal.svelte';
-  import Sidebar from './sidebar.svelte';
-  import LoadLocalModal from './LoadLocalModal.svelte';
-  import { download } from '../lib/ToggleMenu/downloadFile';
-  import { upload } from '../lib/ToggleMenu/uploadFile';
-  import { fromSaved } from '../lib/init';
-  import { saveToLocal } from '../lib/ToggleMenu/local';
-  import { LOCAL_SAVE_KEY } from '../lib/constants';
+  import NetworkEmulator from "./content.svelte";
+  import CreateGraph from "./modal.svelte";
+  import Sidebar from "./sidebar.svelte";
+  import LoadLocalModal from "./LoadLocalModal.svelte";
+  import { download } from "../lib/ToggleMenu/downloadFile";
+  import { upload } from "../lib/ToggleMenu/uploadFile";
+  import { fromSaved } from "../lib/init";
+  import { saveToLocal } from "../lib/ToggleMenu/local";
+  import { LOCAL_SAVE_KEY } from "../lib/constants";
   import {
     Header,
     HeaderUtilities,
@@ -15,25 +15,24 @@
     SkipToContent,
     SideNav,
     Content,
-  } from 'carbon-components-svelte';
-  import CloudUpload32 from 'carbon-icons-svelte/lib/CloudUpload32';
-  import CloudUpload16 from 'carbon-icons-svelte/lib/CloudUpload16';
-  import CloudDownload32 from 'carbon-icons-svelte/lib/CloudDownload32';
-  import FetchUpload32 from 'carbon-icons-svelte/lib/FetchUpload32';
-  import FetchUpload16 from 'carbon-icons-svelte/lib/FetchUpload16';
-  import Help32 from 'carbon-icons-svelte/lib/Help32';
-  import Help16 from 'carbon-icons-svelte/lib/Help16';
-  import Save32 from 'carbon-icons-svelte/lib/Save32';
+  } from "carbon-components-svelte";
+  import CloudUpload32 from "carbon-icons-svelte/lib/CloudUpload32";
+  import CloudUpload16 from "carbon-icons-svelte/lib/CloudUpload16";
+  import CloudDownload32 from "carbon-icons-svelte/lib/CloudDownload32";
+  import FetchUpload32 from "carbon-icons-svelte/lib/FetchUpload32";
+  import FetchUpload16 from "carbon-icons-svelte/lib/FetchUpload16";
+  import Help32 from "carbon-icons-svelte/lib/Help32";
+  import Help16 from "carbon-icons-svelte/lib/Help16";
+  import Save32 from "carbon-icons-svelte/lib/Save32";
 
-  let name = 'Untitled';
+  let name = "Untitled";
   let isSideNavOpen = false;
   let loadLocalOpen = false;
   let graphBase = null;
-  //retrieve the current project on refresh
   const loadProject = (n) => {
     let projects = JSON.parse(localStorage.getItem(LOCAL_SAVE_KEY)) || {};
     if (!projects[n]) {
-      throw 'Internal Error : tried to open non-existing project';
+      throw "Internal Error : tried to open non-existing project";
     }
 
     fromSaved(projects[n]);
@@ -57,7 +56,7 @@
         t.parsed_nodes.push({ id: k, label: k });
       }
       graphBase = t;
-      name = uploaded.name.replace('.json', '');
+      name = uploaded.name.replace(".json", "");
       saveToLocal(name);
       open = false;
     } catch (error) {
@@ -65,10 +64,18 @@
     }
   };
 
-  let lastSaved = localStorage.getItem('lastSaved');
+  //retrieve the current project on refresh
+  let lastSaved = localStorage.getItem("lastSaved");
   if (lastSaved !== null) {
     loadProject(lastSaved);
   }
+  //Use Ctrl+S to Save
+  document.addEventListener("keydown", function (event) {
+    if (event.code == "KeyS" && (event.ctrlKey || event.metaKey)) {
+      event.preventDefault();
+      saveToLocal(name);
+    }
+  });
 </script>
 
 <Header
@@ -144,10 +151,15 @@
   {/if}
 </Content>
 <div id="footer">
-  Developed by <span> &nbsp; &bullet; &nbsp;</span> Yashodhan Joshi
+  Developed by <span> &nbsp; &bullet; &nbsp;</span>
+  <a href="https://github.com/YJDoc2" class="footer-text">Yashodhan Joshi</a>
   <span> &nbsp; &bullet; &nbsp;</span>
-  Yatharth Vyas <span> &nbsp; &bullet; &nbsp;</span> Vatsal Soni
-  <span> &nbsp; &bullet; &nbsp;</span> Tejas Ghone
+  <a href="https://github.com/YatharthVyas" class="footer-text">Yatharth Vyas</a
+  >
+  <span> &nbsp; &bullet; &nbsp;</span>
+  <a href="https://github.com/Vatsalsoni13" class="footer-text">Vatsal Soni</a>
+  <span> &nbsp; &bullet; &nbsp;</span>
+  <a href="https://github.com/Tejas988" class="footer-text">Tejas Ghone</a>
 </div>
 
 <style>
@@ -161,5 +173,8 @@
     color: #ffffff;
     font-size: 1.2rem;
     text-align: center;
+  }
+  .footer-text {
+    color: #ffffff;
   }
 </style>

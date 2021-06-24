@@ -1,27 +1,27 @@
 <script>
-  import Add32 from 'carbon-icons-svelte/lib/Add32';
-  import CloudUpload32 from 'carbon-icons-svelte/lib/CloudUpload32';
-  import CloudDownload32 from 'carbon-icons-svelte/lib/CloudDownload32';
-  import Bookmark32 from 'carbon-icons-svelte/lib/Bookmark32';
-  import BookmarkFilled32 from 'carbon-icons-svelte/lib/BookmarkFilled32';
-  import Search32 from 'carbon-icons-svelte/lib/Search32';
-  import LogoGithub32 from 'carbon-icons-svelte/lib/LogoGithub32';
-  import { Packets } from '../lib/packets';
-  import { Logger } from '../lib/logger';
-  import { onMount } from 'svelte';
-  import { download } from '../lib/ToggleMenu/downloadFile';
-  import { upload } from '../lib/ToggleMenu/uploadFile';
-  import { fromSaved } from '../lib/init';
-  import { saveToLocal } from '../lib/ToggleMenu/local';
+  import Add32 from "carbon-icons-svelte/lib/Add32";
+  import CloudUpload32 from "carbon-icons-svelte/lib/CloudUpload32";
+  import CloudDownload32 from "carbon-icons-svelte/lib/CloudDownload32";
+  import Bookmark32 from "carbon-icons-svelte/lib/Bookmark32";
+  import BookmarkFilled32 from "carbon-icons-svelte/lib/BookmarkFilled32";
+  import Search32 from "carbon-icons-svelte/lib/Search32";
+  import LogoGithub32 from "carbon-icons-svelte/lib/LogoGithub32";
+  import { Packets } from "../lib/packets";
+  import { Logger } from "../lib/logger";
+  import { onMount } from "svelte";
+  import { download } from "../lib/ToggleMenu/downloadFile";
+  import { upload } from "../lib/ToggleMenu/uploadFile";
+  import { fromSaved } from "../lib/init";
+  import { saveToLocal } from "../lib/ToggleMenu/local";
 
-  export let name = 'untitled';
+  export let name = "untitled";
   export let graphBase = null;
   export let open;
   export let loadLocal = false;
 
   //initialising width of sidebar on mounting
   onMount(() => {
-    document.getElementById('mySidenav').style.width = '320px';
+    document.getElementById("mySidenav").style.width = "320px";
   });
 
   const uploadProject = async (e) => {
@@ -34,9 +34,8 @@
       for (let k in json.nodes) {
         t.parsed_nodes.push({ id: k, label: k });
       }
+      name = uploaded.name.replace(".json", "");
       graphBase = t;
-      name = uploaded.name.replace('.json', '');
-
       saveToLocal(name);
       open = false;
     } catch (error) {
@@ -56,7 +55,7 @@
       href="/"
       on:click={(e) => {
         e.preventDefault();
-        name = 'Untitled';
+        name = "Untitled";
         Logger.clear();
         Packets.clear();
         open = false;
