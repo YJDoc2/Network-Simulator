@@ -36,8 +36,6 @@
         t.parsed_nodes.push({ id: k, label: k });
       }
       graphBase = t;
-      name = uploaded.name.replace(".json", "");
-
       saveToLocal(name);
       open = false;
     } catch (error) {

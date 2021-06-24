@@ -58,7 +58,7 @@
       }
       graphBase = t;
       name = uploaded.name.replace(".json", "");
-      saveToLocal(name);
+      localStorage.setItem("name", name);
       open = false;
     } catch (error) {
       console.log(error);
@@ -69,6 +69,14 @@
   if (lastSaved !== null) {
     loadProject(lastSaved);
   }
+  //Use Ctrl+S to Save
+  document.addEventListener("keydown", function (event) {
+    if (event.code == "KeyS" && (event.ctrlKey || event.metaKey)) {
+      event.preventDefault();
+      saveToLocal(name);
+      // alert("Undo!");
+    }
+  });
 </script>
 
 <Header
