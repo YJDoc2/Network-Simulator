@@ -34,6 +34,7 @@
       for (let k in json.nodes) {
         t.parsed_nodes.push({ id: k, label: k });
       }
+      name = uploaded.name.replace(".json", "");
       graphBase = t;
       saveToLocal(name);
       open = false;

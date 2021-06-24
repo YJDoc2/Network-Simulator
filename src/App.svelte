@@ -25,7 +25,7 @@
   import Help16 from "carbon-icons-svelte/lib/Help16";
   import Save32 from "carbon-icons-svelte/lib/Save32";
 
-  let name = "";
+  let name = "Untitled";
   let isSideNavOpen = false;
   let loadLocalOpen = false;
   let graphBase = null;
@@ -57,7 +57,7 @@
       }
       graphBase = t;
       name = uploaded.name.replace(".json", "");
-      localStorage.setItem("name", name);
+      saveToLocal(name);
       open = false;
     } catch (error) {
       console.log(error);
