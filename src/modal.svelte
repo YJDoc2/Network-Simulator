@@ -50,6 +50,7 @@
 
 <ComposedModal
   size="lg"
+  bind:open
   on:open
   on:close
   on:submit={() => {

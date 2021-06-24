@@ -151,10 +151,15 @@
   {/if}
 </Content>
 <div id="footer">
-  Developed by <span> &nbsp; &bullet; &nbsp;</span> Yashodhan Joshi
+  Developed by <span> &nbsp; &bullet; &nbsp;</span>
+  <a href="https://github.com/YJDoc2" class="footer-text">Yashodhan Joshi</a>
   <span> &nbsp; &bullet; &nbsp;</span>
-  Yatharth Vyas <span> &nbsp; &bullet; &nbsp;</span> Vatsal Soni
-  <span> &nbsp; &bullet; &nbsp;</span> Tejas Ghone
+  <a href="https://github.com/YatharthVyas" class="footer-text">Yatharth Vyas</a
+  >
+  <span> &nbsp; &bullet; &nbsp;</span>
+  <a href="https://github.com/Vatsalsoni13" class="footer-text">Vatsal Soni</a>
+  <span> &nbsp; &bullet; &nbsp;</span>
+  <a href="https://github.com/Tejas988" class="footer-text">Tejas Ghone</a>
 </div>
 
 <style>
@@ -168,5 +173,8 @@
     color: #ffffff;
     font-size: 1.2rem;
     text-align: center;
+  }
+  .footer-text {
+    color: #ffffff;
   }
 </style>
