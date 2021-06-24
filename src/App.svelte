@@ -29,7 +29,6 @@
   let isSideNavOpen = false;
   let loadLocalOpen = false;
   let graphBase = null;
-  //retrieve the current project on refresh
   const loadProject = (n) => {
     let projects = JSON.parse(localStorage.getItem(LOCAL_SAVE_KEY)) || {};
     if (!projects[n]) {
@@ -65,6 +64,7 @@
     }
   };
 
+  //retrieve the current project on refresh
   let lastSaved = localStorage.getItem("lastSaved");
   if (lastSaved !== null) {
     loadProject(lastSaved);
@@ -74,7 +74,6 @@
     if (event.code == "KeyS" && (event.ctrlKey || event.metaKey)) {
       event.preventDefault();
       saveToLocal(name);
-      // alert("Undo!");
     }
   });
 </script>
@@ -127,7 +126,6 @@
   <Sidebar
     bind:graphBase
     bind:name
-    bind:modalOpen
     bind:loadLocal={loadLocalOpen}
     bind:open={isSideNavOpen}
   />
@@ -146,10 +144,7 @@
         />
       </p>
     </div>
-    <CreateGraph bind:modalOpen bind:graphBase bind:name />
-  {/if}
-  {#if modalOpen}
-    <CreateGraph bind:modalOpen bind:graphBase bind:name />
+    <CreateGraph bind:graphBase bind:name />
   {/if}
   {#if loadLocalOpen}
     <LoadLocalModal bind:open={loadLocalOpen} {loadProject} />

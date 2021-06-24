@@ -17,7 +17,6 @@
   export let name = "untitled";
   export let graphBase = null;
   export let open;
-  export let modalOpen;
   export let loadLocal = false;
 
   //initialising width of sidebar on mounting
@@ -59,8 +58,7 @@
         Logger.clear();
         Packets.clear();
         open = false;
-        modalOpen = true;
-        // graphBase = null;
+        graphBase = null;
       }}>New Project</a
     >
   </div>
