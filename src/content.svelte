@@ -75,21 +75,6 @@
     try {
       let s = getSimulator();
       drawGraph(s);
-      let from = s.nodes.get('B');
-      let to = s.nodes.get('A');
-
-      let [x, y] = getOffset(from, to);
-
-      draw
-        .circle(PACKET_RADIUS)
-        .fill('#FF0000')
-        .move(from.x + x - PACKET_RADIUS / 2, from.y - y - PACKET_RADIUS / 2);
-
-      draw
-        .circle(PACKET_RADIUS)
-        .fill('#FF0000')
-        .move(to.x - x - PACKET_RADIUS / 2, to.y - y - PACKET_RADIUS / 2);
-
       return;
     } catch (e) {
       console.log(e);
