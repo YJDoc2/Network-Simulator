@@ -14,6 +14,7 @@
 
 <div id="container">
   <Button
+    disabled={animationPlaying}
     kind="ghost"
     iconDescription="Start"
     icon={Play32}
@@ -25,6 +26,7 @@
   />
 
   <Button
+    disabled={animationPlaying}
     kind="ghost"
     iconDescription="Step"
     icon={ArrowRight32}

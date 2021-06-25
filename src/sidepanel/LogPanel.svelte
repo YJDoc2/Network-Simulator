@@ -66,7 +66,7 @@
 >
   {#each packets as packet}
     <Tile>
-      {packet}
+      {JSON.stringify(packet)}
     </Tile>
   {/each}
 </Modal>
