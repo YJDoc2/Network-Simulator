@@ -65,17 +65,7 @@
     }}
   >
     <Add32 />
-    <a
-      href="/"
-      on:click={(e) => {
-        e.preventDefault();
-        name = "Untitled";
-        Logger.clear();
-        Packets.clear();
-        open = false;
-        graphBase = null;
-      }}>New Project</a
-    >
+    <a href="/">New Project</a>
   </div>
   <div id="items" on:click={(e) => uploadProject(e)}>
     <CloudUpload32 />
