@@ -1,5 +1,6 @@
 <script>
   import { translateGraphCoordinates, scaleCoordinates } from '../lib/util';
+  import { Logger } from '../lib/logger';
   import { getSimulator, init } from '../lib/init';
   import { listener } from '../lib/init';
   import { SVG } from '@svgdotjs/svg.js';
@@ -24,6 +25,12 @@
     if (!stopped) {
       let s = getSimulator();
       let q = s.step();
+      if (q.length === 0) {
+        Logger.log('All queues are empty, stopping.');
+        playing = false;
+        stopped = true;
+        return;
+      }
       let { duration: duration, sorted: sorted } = sortPackets(q);
       animate(draw, s, sorted);
       setTimeout(() => {
@@ -38,6 +45,12 @@
   const step = () => {
     let s = getSimulator();
     let q = s.step();
+    if (q.length === 0) {
+      Logger.log('All queues are empty, stopping.');
+      playing = false;
+      stopped = true;
+      return;
+    }
     let { duration: duration, sorted: sorted } = sortPackets(q);
     animate(draw, s, sorted);
     setTimeout(() => {

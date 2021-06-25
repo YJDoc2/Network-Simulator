@@ -42,7 +42,7 @@
   };
 </script>
 
-<ComposedModal bind:open on:open on:close on:submit={submit}>
+<ComposedModal size="lg" bind:open on:open on:close on:submit={submit}>
   <ModalHeader label="Node {selected}" title="Node {selected} data" />
   <ModalBody>
     <Grid>
@@ -52,7 +52,7 @@
             bind:value={mem}
             labelText="Node Memoey"
             placeholder="Node Memory"
-            rows={15}
+            rows={25}
           />
         </Column>
         <Column md={2} />
@@ -61,7 +61,7 @@
             bind:value={fn}
             labelText="Node Function"
             placeholder="Node Function"
-            rows={15}
+            rows={25}
           />
         </Column>
       </Row>
