@@ -7,6 +7,8 @@
   import { ButtonSet, Button } from 'carbon-components-svelte';
   import { TextInput } from 'carbon-components-svelte';
 
+  export let playing = false;
+
   let nodes = [];
   listener.subscribe((sim) => {
     if (sim) {
@@ -37,6 +39,7 @@
         <ButtonSet>
           <Tile>{node}</Tile>
           <Button
+            disabled={playing}
             kind="ghost"
             on:click={() => {
               selected = node;
@@ -44,6 +47,7 @@
             }}>Config</Button
           >
           <Button
+            disabled={playing}
             kind="ghost"
             on:click={() => {
               selected = node;

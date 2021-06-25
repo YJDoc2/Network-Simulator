@@ -5,17 +5,47 @@
   import { SVG } from '@svgdotjs/svg.js';
   import { onMount } from 'svelte';
   import SidePanel from './sidepanel/SidePanel.svelte';
+  import ControllBar from './ControllBar.svelte';
   import { Grid, Row, Column } from 'carbon-components-svelte';
-  import { NODE_RADIUS, NODE_COLOR, PACKET_RADIUS } from '../lib/constants';
+  import { NODE_RADIUS, NODE_COLOR } from '../lib/constants';
   import { saveToLocal } from '../lib/ToggleMenu/local';
-  import { sortPackets, getOffset } from '../lib/animation/index';
+  import { animate, sortPackets } from '../lib/animation';
 
   export let graphBase;
   export let name;
 
+  let playing = false;
+  let stopped = true;
   let SVGDiv;
   let VISDiv;
   let draw;
+
+  const play = () => {
+    if (!stopped) {
+      let s = getSimulator();
+      let q = s.step();
+      let { duration: duration, sorted: sorted } = sortPackets(q);
+      animate(draw, s, sorted);
+      setTimeout(() => {
+        s.nextEnqueue(q);
+        play();
+      }, duration);
+    } else {
+      playing = false;
+    }
+  };
+
+  const step = () => {
+    let s = getSimulator();
+    let q = s.step();
+    let { duration: duration, sorted: sorted } = sortPackets(q);
+    animate(draw, s, sorted);
+    setTimeout(() => {
+      playing = false;
+      stopped = true;
+      s.nextEnqueue(q);
+    }, duration);
+  };
 
   const drawGraph = (sim) => {
     draw.clear();
@@ -100,24 +130,19 @@
     //Initial save to library
     saveToLocal(name);
   });
-
-  // let timeline = new Timeline();
-  // c3.timeline(timeline);
-  // c4.timeline(timeline);
-  // c3.animate(1000, 0, "absolute").move(170, 120);
-  // c4.animate(1000, 0, "absolute").move(40, 80);
 </script>
 
 <Grid condensed={true} noGutter={true}>
   <Row>
     <Column md={3}>
-      <SidePanel />
+      <SidePanel {playing} />
     </Column>
     <Column md={5}>
+      <ControllBar bind:animationPlaying={playing} bind:stopped {play} {step} />
       <div id="network-visjs" bind:this={VISDiv} />
       <div
         bind:this={SVGDiv}
-        style="min-height: 57.5vh;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        style="min-height: 85vh;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
       "
       />
     </Column>
