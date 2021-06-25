@@ -24,6 +24,10 @@
     document.getElementById("mySidenav").style.width = "320px";
   });
 
+  /**
+   * Upload function for loading .json file of the simulation.
+   *
+   */
   const uploadProject = async (e) => {
     e.preventDefault();
     try {
@@ -49,23 +53,23 @@
     <h2 style="font-weight: bold;">{name}</h2>
   </div>
   <hr />
-  <div id="items">
+  <div
+    id="items"
+    on:click={(e) => {
+      e.preventDefault();
+      name = "Untitled";
+      Logger.clear();
+      Packets.clear();
+      open = false;
+      graphBase = null;
+    }}
+  >
     <Add32 />
-    <a
-      href="/"
-      on:click={(e) => {
-        e.preventDefault();
-        name = "Untitled";
-        Logger.clear();
-        Packets.clear();
-        open = false;
-        graphBase = null;
-      }}>New Project</a
-    >
+    <a href="/">New Project</a>
   </div>
-  <div id="items">
+  <div id="items" on:click={(e) => uploadProject(e)}>
     <CloudUpload32 />
-    <a href="/" on:click={(e) => uploadProject(e)}>Upload Project</a>
+    <a href="/">Upload Project</a>
   </div>
   <div
     id="items"
@@ -77,32 +81,35 @@
     <CloudDownload32 />
     <a href="/">Download Project</a>
   </div>
-  <div id="items">
+  <div
+    id="items"
+    on:click={(e) => {
+      e.preventDefault();
+      saveToLocal(name);
+    }}
+  >
     <Bookmark32 />
-    <a
-      href="/"
-      on:click={(e) => {
-        e.preventDefault();
-        saveToLocal(name);
-      }}>Save to Library</a
-    >
+    <a href="/">Save to Library</a>
+  </div>
+  <div
+    id="items"
+    on:click={(e) => {
+      e.preventDefault();
+      loadLocal = true;
+      open = false;
+    }}
+  >
+    <BookmarkFilled32 />
+    <a href="/">Load project from Library</a>
   </div>
   <div id="items">
-    <BookmarkFilled32 />
-    <a
-      href="/"
-      on:click={(e) => {
-        e.preventDefault();
-        loadLocal = true;
-        open = false;
-      }}>Load project from Library</a
-    >
-  </div>
-  <div id="items" style="display: flex;">
     <Search32 />
     <a href="/">Help/FAQs</a>
   </div>
-  <div id="items">
+  <div
+    id="items"
+    onclick="window.open('https://github.com/YJDoc2/Network-Simulator','mywindow');"
+  >
     <LogoGithub32 />
     <a href="https://github.com/YJDoc2/Network-Simulator">Github</a>
   </div>
@@ -121,10 +128,13 @@
   }
 
   #items {
-    margin-left: 1em;
+    padding-left: 1em;
+    padding-bottom: 5px;
     display: flex;
     padding-top: 1.3em;
     align-items: center;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   }
   .sidenav {
     height: 100%;
