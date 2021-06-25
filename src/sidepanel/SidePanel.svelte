@@ -3,7 +3,7 @@
   import NodeInfo from './NodeInfo.svelte';
   import LogPanel from './LogPanel.svelte';
 
-  export let playing = false;
+  export let playing;
 </script>
 
 <Grid>

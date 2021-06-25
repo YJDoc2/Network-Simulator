@@ -7,6 +7,7 @@
   import { onMount } from 'svelte';
   import SidePanel from './sidepanel/SidePanel.svelte';
   import ControllBar from './ControllBar.svelte';
+  import OpenNodeModal from './OpenNodeModal.svelte';
   import { Grid, Row, Column } from 'carbon-components-svelte';
   import { NODE_RADIUS, NODE_COLOR } from '../lib/constants';
   import { saveToLocal } from '../lib/ToggleMenu/local';
@@ -17,6 +18,8 @@
 
   let playing = false;
   let stopped = true;
+  let selected;
+  let openSelected = false;
   let SVGDiv;
   let VISDiv;
   let draw;
@@ -82,13 +85,15 @@
     // Draw Nodes
     let node_vertices = [];
     nodes.forEach((node, name) => {
-      node_vertices.push(
+      node_vertices.push([
+        name,
         draw
           .circle(NODE_RADIUS)
+          .css('cursor', 'pointer')
           .fill(NODE_COLOR)
           .stroke({ color: NODE_COLOR, width: 2 })
-          .move(node.x - NODE_RADIUS / 2, node.y - NODE_RADIUS / 2)
-      );
+          .move(node.x - NODE_RADIUS / 2, node.y - NODE_RADIUS / 2),
+      ]);
       draw
         .plain(name)
         .font({ fill: '#000000', size: '2rem' })
@@ -97,6 +102,15 @@
           node.x - NODE_RADIUS / 2 - (name.length - 1) * 5,
           node.y + NODE_RADIUS / 2
         );
+    });
+
+    node_vertices.forEach(([name, v]) => {
+      v.click(() => {
+        if (!playing) {
+          openSelected = true;
+          selected = name;
+        }
+      });
     });
   };
 
@@ -161,6 +175,10 @@
     </Column>
   </Row>
 </Grid>
+
+{#if openSelected}
+  <OpenNodeModal bind:open={openSelected} bind:selected />
+{/if}
 
 <style>
   /* Hide the Visjs div. Note: Do not use display: none; here as it causes unexpected behaviour */
