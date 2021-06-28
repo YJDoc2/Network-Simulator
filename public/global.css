@@ -78,3 +78,13 @@ button:focus {
   border-bottom: 1px solid #ccc;
   font-size: x-large;
 }
+
+#footer,
+#footer * {
+  color: #ddd;
+  font-size: 1rem !important;
+}
+
+.bx--header__name {
+  font-size: 1.2rem !important;
+}

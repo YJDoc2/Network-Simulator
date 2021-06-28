@@ -9,7 +9,7 @@
   import ControllBar from './ControllBar.svelte';
   import OpenNodeModal from './OpenNodeModal.svelte';
   import { Grid, Row, Column } from 'carbon-components-svelte';
-  import { NODE_RADIUS, NODE_COLOR } from '../lib/constants';
+  import { EDGE_COLOR, NODE_RADIUS, NODE_BACKGROUND } from '../lib/constants';
   import { saveToLocal } from '../lib/ToggleMenu/local';
   import { animate, sortPackets } from '../lib/animation';
 
@@ -77,7 +77,7 @@
         nodes.get(`${edge.to}`).x,
         nodes.get(`${edge.to}`).y
       );
-      temp.stroke({ color: NODE_COLOR, width: 7, linecap: "round" });
+      temp.stroke({ color: EDGE_COLOR, width: 7, linecap: "round" });
       edge_lines.push(temp);
     }
     sim.edges.forEach(DrawLine);
@@ -85,14 +85,20 @@
     // Draw Nodes
     let node_vertices = [];
     nodes.forEach((node, name) => {
+      // Paint the background for the Network Node Image.
+      // This ensures that the edge line doesnt display below the transparent svg
+      draw
+        .circle(NODE_RADIUS)
+        .css('cursor', 'pointer')
+        .fill(NODE_BACKGROUND)
+        .stroke({ color: NODE_BACKGROUND, width: 2 })
+        .move(node.x - NODE_RADIUS / 2, node.y - NODE_RADIUS / 2);
       node_vertices.push([
         name,
         draw
-          .circle(NODE_RADIUS)
-          .css('cursor', 'pointer')
-          .fill(NODE_COLOR)
-          .stroke({ color: NODE_COLOR, width: 2 })
-          .move(node.x - NODE_RADIUS / 2, node.y - NODE_RADIUS / 2),
+          .image('/network_node.svg')
+          .move(node.x - NODE_RADIUS / 2, node.y - NODE_RADIUS / 2)
+          .css('cursor', 'pointer'),
       ]);
       draw
         .plain(name)
