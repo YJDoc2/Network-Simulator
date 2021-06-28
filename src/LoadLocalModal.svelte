@@ -1,7 +1,8 @@
 <script>
-  import { Modal } from 'carbon-components-svelte';
-  import { Tile, Button, InlineNotification } from 'carbon-components-svelte';
-  import { LOCAL_SAVE_KEY } from '../lib/constants';
+  import { Modal } from "carbon-components-svelte";
+  import { Tile, Button, InlineNotification } from "carbon-components-svelte";
+  import { LOCAL_SAVE_KEY } from "../lib/constants";
+  import { saveToLocal } from "../lib/ToggleMenu/local";
 
   export let loadProject;
   export let open = true;
@@ -18,6 +19,7 @@
       on:click={() => {
         try {
           loadProject(name);
+          saveToLocal(name);
         } catch (e) {
           console.log(e);
           error = true;
@@ -35,7 +37,7 @@
       hideCloseButton
       kind="error"
       title="Error:"
-      subtitle={'Error in Loading saved project'}
+      subtitle={"Error in Loading saved project"}
     />
   {/if}
 </Modal>
