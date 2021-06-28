@@ -49,12 +49,13 @@
 </script>
 
 <div id="mySidenav" class="sidenav">
+  <img src="/favicon.png" alt="logo" height="100" width="100" id="sidebar-img"/>
   <div id="title">
     <h2 style="font-weight: bold;">{name}</h2>
   </div>
   <hr />
   <div
-    id="items"
+    class="items"
     on:click={(e) => {
       e.preventDefault();
       name = "Untitled";
@@ -65,34 +66,34 @@
     }}
   >
     <Add32 />
-    <a href="/">New Project</a>
+    <span>New Project</span>
   </div>
-  <div id="items" on:click={(e) => uploadProject(e)}>
+  <div class="items" on:click={(e) => uploadProject(e)}>
     <CloudUpload32 />
-    <a href="/">Upload Project</a>
+    <span>Upload Project</span>
   </div>
   <div
-    id="items"
+    class="items"
     on:click={(e) => {
       download(e, name);
       open = false;
     }}
   >
     <CloudDownload32 />
-    <a href="/">Download Project</a>
+    <span>Download Project</span>
   </div>
   <div
-    id="items"
+    class="items"
     on:click={(e) => {
       e.preventDefault();
       saveToLocal(name);
     }}
   >
     <Bookmark32 />
-    <a href="/">Save to Library</a>
+    <span>Save to Library</span>
   </div>
   <div
-    id="items"
+    class="items"
     on:click={(e) => {
       e.preventDefault();
       loadLocal = true;
@@ -100,14 +101,14 @@
     }}
   >
     <BookmarkFilled32 />
-    <a href="/">Load project from Library</a>
+    <span>Load project from Library</span>
   </div>
-  <div id="items">
+  <div class="items">
     <Search32 />
-    <a href="/">Help/FAQs</a>
+    <span>Help/FAQs</span>
   </div>
   <div
-    id="items"
+    class="items"
     onclick="window.open('https://github.com/YJDoc2/Network-Simulator','mywindow');"
   >
     <LogoGithub32 />
@@ -118,6 +119,8 @@
 <style>
   #title {
     margin-left: 1em;
+    margin-top: 5vh;
+    font-size: 2rem;
   }
 
   hr {
@@ -127,7 +130,7 @@
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   }
 
-  #items {
+  .items {
     padding-left: 1em;
     padding-bottom: 5px;
     display: flex;
@@ -140,36 +143,39 @@
     height: 100%;
     width: 0;
     position: fixed;
-    /* top: 4em; */
     left: 0;
     background-color: rgb(255, 255, 255);
     overflow-x: hidden;
     transition: 0.5s;
-    padding-top: 60px;
+    padding-top: 40px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   }
 
-  .sidenav a {
-    padding: 8px 8px 8px 32px;
+  #sidebar-img {
+    margin-left: 20px;
+  }
+
+  .sidenav a,
+  .sidenav span {
+    padding: 8px 8px 8px 12px;
     text-decoration: none;
-    font-size: 20px;
+    font-size: 1rem;
     color: #818181;
     display: block;
     transition: 0.3s;
   }
 
-  .sidenav #items:hover {
-    color: #e6e6e6;
-  }
-  .sidenav a:hover {
-    color: #e6e6e6;
+  .sidenav .items:hover *,
+  .sidenav .items:hover {
+    color: #ff8f00 !important;
   }
 
   @media screen and (max-height: 450px) {
     .sidenav {
       padding-top: 15px;
     }
-    .sidenav a {
+    .sidenav a,
+    .sidenav span {
       font-size: 18px;
     }
   }
