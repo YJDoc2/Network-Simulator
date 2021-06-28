@@ -14,6 +14,7 @@
     ModalBody,
     ModalFooter,
   } from "carbon-components-svelte";
+  import { onMount } from "svelte";
 
   export let selected = "";
   export let open = false;
