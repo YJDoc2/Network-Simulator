@@ -4,27 +4,27 @@
     setNodeFunction,
     getNodeFunction,
     getNodeMemory,
-  } from '../../lib';
-  import { TextArea } from 'carbon-components-svelte';
-  import { Grid, Row, Column } from 'carbon-components-svelte';
-  import { InlineNotification } from 'carbon-components-svelte';
+  } from "../../lib";
+  import { TextArea } from "carbon-components-svelte";
+  import { Grid, Row, Column } from "carbon-components-svelte";
+  import { InlineNotification } from "carbon-components-svelte";
   import {
     ComposedModal,
     ModalHeader,
     ModalBody,
     ModalFooter,
-  } from 'carbon-components-svelte';
+  } from "carbon-components-svelte";
 
-  export let selected = '';
+  export let selected = "";
   export let open = false;
 
-  let mem = '';
-  let fn = '';
+  let mem = "";
+  let fn = "";
 
-  let error = '';
+  let error = "";
 
   $: {
-    if (selected != '') {
+    if (selected != "") {
       mem = getNodeMemory(selected);
       fn = getNodeFunction(selected);
     }
@@ -34,7 +34,7 @@
     try {
       setNodeMemory(selected, mem);
       setNodeFunction(selected, fn);
-      error = '';
+      error = "";
       open = false;
     } catch (e) {
       error = e;
@@ -66,7 +66,7 @@
         </Column>
       </Row>
     </Grid>
-    {#if error !== ''}
+    {#if error !== ""}
       <InlineNotification
         lowContrast
         hideCloseButton
