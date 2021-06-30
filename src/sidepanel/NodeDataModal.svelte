@@ -90,15 +90,25 @@
                 styleSelectedText: true,
                 indentWithTabs: true,
                 autoCloseBrackets: true,
-                gutters: ["CodeMirror-lint-markers"],
-                lint: true,
                 lineWrapping: true,
                 // extraKeys: { "Ctrl-Space": "autocomplete" },
               }
             );
             editor.setOption("extraKeys", {
               "Cmd-E": "autocomplete",
-              "Ctrl-E": "autocomplete",
+              "Ctrl-Space": "autocomplete",
+            });
+            editor.on("inputRead", function (cm, event) {
+              if (
+                !cm.state
+                  .completionActive /*Enables keyboard navigation in autocomplete list*/ &&
+                event.keyCode != 13
+              ) {
+                /*Enter - do not open autocomplete list just after item has been selected in it*/
+                CodeMirror.commands.autocomplete(cm, null, {
+                  completeSingle: false,
+                });
+              }
             });
           </script>
         </Column>
