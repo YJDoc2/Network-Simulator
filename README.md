@@ -8,7 +8,16 @@ This is a simple in browser network simulator, which can be used to visualize ne
 
 ## How to use it
 
-WIP
+step 1) Input the graph structure and name of project
+<img src = "./Readme_Img/SignUp.png" alt ="SignUp Screen Screenshot" />
+
+step 2) Add memory and function for respective nodes
+
+step 3) Click on play button on top right to start the animation and check logs.
+
+step 4) You can view the entire packet history of network
+
+
 
 ## Licence
 
