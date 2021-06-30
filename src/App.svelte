@@ -134,6 +134,7 @@
     bind:loadLocal={loadLocalOpen}
     bind:open={isSideNavOpen}
   />
+ </SideNav>
 
 <Content style="margin-top:2.5rem;padding: 0;margin-left: 0;">
   {#if graphBase}
