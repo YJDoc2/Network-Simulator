@@ -8,7 +8,20 @@ This is a simple in browser network simulator, which can be used to visualize ne
 
 ## How to use it
 
-WIP
+### step 1) Input the graph structure and name of project, click Create and graph will be drawn
+<img src = "./Readme_Img/structure.png" alt ="Structure Screenshot" />
+<img src = "./Readme_Img/graph.png" alt ="Graph Screenshot" />
+
+### step 2) Add memory and function also enquue packets for respective nodes
+<img src = "./Readme_Img/config.png" alt ="Config Screenshot" />
+<img src = "./Readme_Img/queue.png" alt ="Queue Screenshot" />
+
+### step 3) Click on play button on top right to start the animation and check logs.
+<img src = "./Readme_Img/animation.png" alt ="Animation Screenshot" />
+
+### step 4) You can view the entire packet history of network
+<img src = "./Readme_Img/packet.png" alt ="Packet Screenshot" />
+
 
 ## Licence
 

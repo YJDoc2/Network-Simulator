@@ -32,8 +32,12 @@
 
   let submit = () => {
     try {
-      setNodeMemory(selected, mem);
-      setNodeFunction(selected, fn);
+      //Getting updated Values from editor
+      let func = editor.getValue();
+      let memE = editorMem.getValue();
+      console.log(memE);
+      setNodeMemory(selected, memE);
+      setNodeFunction(selected, func);
       error = "";
       open = false;
     } catch (e) {
@@ -42,7 +46,15 @@
   };
 </script>
 
-<ComposedModal size="lg" bind:open on:open on:close on:submit={submit}>
+<ComposedModal
+  size="lg"
+  bind:open
+  on:open
+  on:close
+  on:submit={() => {
+    submit();
+  }}
+>
   <ModalHeader label="Node {selected}" title="Node {selected} data" />
   <ModalBody style="padding:10px">
     <Grid>
@@ -56,7 +68,7 @@
             rows={25}
           />
           <script>
-            var editor = CodeMirror.fromTextArea(
+            var editorMem = CodeMirror.fromTextArea(
               document.getElementById("memory"),
               {
                 lineNumbers: true,
@@ -69,6 +81,19 @@
                 lineWrapping: true,
               }
             );
+            editorMem.on("change", function (cm, event) {
+              // console.log(editor.getValue());
+              if (
+                !cm.state
+                  .completionActive /*Enables keyboard navigation in autocomplete list*/ &&
+                event.keyCode != 13
+              ) {
+                /*Enter - do not open autocomplete list just after item has been selected in it*/
+                CodeMirror.commands.autocomplete(cm, null, {
+                  completeSingle: false,
+                });
+              }
+            });
           </script>
         </Column>
         <Column md={1} />
@@ -91,14 +116,13 @@
                 indentWithTabs: true,
                 autoCloseBrackets: true,
                 lineWrapping: true,
-                // extraKeys: { "Ctrl-Space": "autocomplete" },
               }
             );
             editor.setOption("extraKeys", {
               "Cmd-E": "autocomplete",
               "Ctrl-Space": "autocomplete",
             });
-            editor.on("inputRead", function (cm, event) {
+            editor.on("change", function (cm, event) {
               if (
                 !cm.state
                   .completionActive /*Enables keyboard navigation in autocomplete list*/ &&

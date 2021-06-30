@@ -49,7 +49,13 @@
 </script>
 
 <div id="mySidenav" class="sidenav">
-  <img src="/favicon.png" alt="logo" height="100" width="100" id="sidebar-img"/>
+  <img
+    src="/favicon.png"
+    alt="logo"
+    height="100"
+    width="100"
+    id="sidebar-img"
+  />
   <div id="title">
     <h2 style="font-weight: bold;">{name}</h2>
   </div>
