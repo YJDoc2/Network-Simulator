@@ -1,4 +1,5 @@
 <script>
+
   import { ParseGraph } from "../lib/parsers";
   import { clear } from "../lib/init";
   import {
@@ -16,9 +17,11 @@
   export let graphBase;
   export let name = "Untitled";
 
+
   let error = false;
   let graphList = "";
-  let src = "utils/graph.png";
+  let src = 'utils/graph.png';
+
   let invalid = false;
   const placeholder = "A-B\nA-C\nC-D";
   let open = true;
@@ -36,6 +39,7 @@
     if (graphList.length <= 0) {
       error = true;
     } else {
+
       try {
         // Parse the Input string and get Edges & Nodes in Vis.js compatible format
         graphBase = ParseGraph(graphList.toUpperCase().trim());
@@ -44,6 +48,7 @@
         console.log(e);
         error = true;
       }
+
     }
   };
 </script>
@@ -58,6 +63,7 @@
   }}
   preventCloseOnClickOutside
 >
+
   <ModalHeader title="Create Network" />
   <ModalBody>
     <TextInput
@@ -66,6 +72,7 @@
       label="Project Name"
       style="max-width:max-content;font-size: 18px;"
       bind:value={name}
+
     />
     <div>
       <p>Example:</p>

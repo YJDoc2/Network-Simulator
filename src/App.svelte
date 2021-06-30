@@ -125,6 +125,7 @@
   </HeaderUtilities>
 </Header>
 
+
 <!-- fixed=true because then the overlay background condition will never become true -->
 <SideNav fixed={true} style="z-index: 1;" bind:isOpen={isSideNavOpen}>
   <Sidebar
@@ -133,7 +134,7 @@
     bind:loadLocal={loadLocalOpen}
     bind:open={isSideNavOpen}
   />
-</SideNav>
+
 <Content style="margin-top:2.5rem;padding: 0;margin-left: 0;">
   {#if graphBase}
     <NetworkEmulator bind:name bind:graphBase />
@@ -153,6 +154,7 @@
   {#if loadLocalOpen}
     <LoadLocalModal bind:open={loadLocalOpen} {loadProject} />
   {/if}
+
 </Content>
 <div id="footer">
   Developed by <span> &nbsp; &bullet; &nbsp;</span>
