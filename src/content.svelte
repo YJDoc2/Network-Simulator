@@ -77,7 +77,7 @@
         nodes.get(`${edge.to}`).x,
         nodes.get(`${edge.to}`).y
       );
-      temp.stroke({ color: EDGE_COLOR, width: 7, linecap: "round" });
+      temp.stroke({ color: EDGE_COLOR, width: 7, linecap: 'round' });
       edge_lines.push(temp);
     }
     sim.edges.forEach(DrawLine);
@@ -96,13 +96,13 @@
       node_vertices.push([
         name,
         draw
-          .image('/network_node.svg')
+          .image('network_node.svg')
           .move(node.x - NODE_RADIUS / 2, node.y - NODE_RADIUS / 2)
           .css('cursor', 'pointer'),
       ]);
       draw
         .plain(name)
-        .font({ fill: "#000000", size: "2rem" })
+        .font({ fill: '#000000', size: '2rem' })
         .move(
           // here we subtract 1 from node length to skip single lettered names
           node.x - NODE_RADIUS / 2 - (name.length - 1) * 5,

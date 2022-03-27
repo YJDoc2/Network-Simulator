@@ -2,7 +2,7 @@
   "name": "svelte-app",
   "version": "1.0.0",
   "private": true,
-  "homepage": "https://yjdoc2.github.io/Network-Simulator/",
+  "homepage": "https://yjdoc2.github.io/Network-Simulator",
   "scripts": {
     "deploy": "gh-pages -d public -b deploy --remote github",
     "build": "rollup -c",
