@@ -18,6 +18,7 @@
   export let graphBase = null;
   export let open;
   export let loadLocal = false;
+  export let helpOpen = false;
 
   //initialising width of sidebar on mounting
   onMount(() => {
@@ -109,7 +110,14 @@
     <BookmarkFilled32 />
     <span>Load project from Library</span>
   </div>
-  <div class="items">
+  <div
+    class="items"
+    on:click={(e) => {
+      e.preventDefault();
+      helpOpen = true;
+      // open = false;
+    }}
+  >
     <Search32 />
     <span>Help/FAQs</span>
   </div>
