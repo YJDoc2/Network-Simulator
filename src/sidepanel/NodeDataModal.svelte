@@ -35,7 +35,6 @@
       //Getting updated Values from editor
       let func = editor.getValue();
       let memE = editorMem.getValue();
-      console.log(memE);
       setNodeMemory(selected, memE);
       setNodeFunction(selected, func);
       error = "";
@@ -63,7 +62,7 @@
           <TextArea
             bind:value={mem}
             id="memory"
-            labelText="Node Memoey"
+            labelText="Node Memory"
             placeholder="Node Memory"
             rows={25}
           />
@@ -81,8 +80,7 @@
                 lineWrapping: true,
               }
             );
-            editorMem.on("change", function (cm, event) {
-              // console.log(editor.getValue());
+            editorMem.on("keyup", function (cm, event) {
               if (
                 !cm.state
                   .completionActive /*Enables keyboard navigation in autocomplete list*/ &&
@@ -122,7 +120,7 @@
               "Cmd-E": "autocomplete",
               "Ctrl-Space": "autocomplete",
             });
-            editor.on("change", function (cm, event) {
+            editor.on("keyup", function (cm, event) {
               if (
                 !cm.state
                   .completionActive /*Enables keyboard navigation in autocomplete list*/ &&

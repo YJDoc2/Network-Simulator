@@ -3,6 +3,7 @@
   import CreateGraph from "./modal.svelte";
   import Sidebar from "./sidebar.svelte";
   import LoadLocalModal from "./LoadLocalModal.svelte";
+  import Help from "./Help.svelte";
   import { download } from "../lib/ToggleMenu/downloadFile";
   import { upload } from "../lib/ToggleMenu/uploadFile";
   import { fromSaved } from "../lib/init";
@@ -29,6 +30,7 @@
   let isSideNavOpen = false;
   let loadLocalOpen = false;
   let graphBase = null;
+  let helpOpen = false;
   const loadProject = (n) => {
     let projects = JSON.parse(localStorage.getItem(LOCAL_SAVE_KEY)) || {};
     if (!projects[n]) {
@@ -121,10 +123,16 @@
         loadLocalOpen = true;
       }}
     />
-    <HeaderGlobalAction aria-label="Help" title={"Help"} icon={Help32} />
+    <HeaderGlobalAction
+      aria-label="Help"
+      title={"Help"}
+      icon={Help32}
+      on:click={() => {
+        helpOpen = true;
+      }}
+    />
   </HeaderUtilities>
 </Header>
-
 
 <!-- fixed=true because then the overlay background condition will never become true -->
 <SideNav fixed={true} style="z-index: 1;" bind:isOpen={isSideNavOpen}>
@@ -133,8 +141,9 @@
     bind:name
     bind:loadLocal={loadLocalOpen}
     bind:open={isSideNavOpen}
+    bind:helpOpen
   />
- </SideNav>
+</SideNav>
 
 <Content style="margin-top:2.5rem;padding: 0;margin-left: 0;">
   {#if graphBase}
@@ -155,7 +164,9 @@
   {#if loadLocalOpen}
     <LoadLocalModal bind:open={loadLocalOpen} {loadProject} />
   {/if}
-
+  {#if helpOpen}
+    <Help bind:open={helpOpen} />
+  {/if}
 </Content>
 <div id="footer">
   Developed by <span> &nbsp; &bullet; &nbsp;</span>
